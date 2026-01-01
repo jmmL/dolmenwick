@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorLog = document.getElementById('error-log');
 
     generateButton.addEventListener('click', async () => {
+        generateButton.disabled = true;
+        generateButton.textContent = "Generating...";
         try {
             errorLog.innerHTML = "";
             const data = await generateParty();
@@ -38,6 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {
             errorLog.innerHTML = "Error: " + e.message;
             console.error(e);
+        } finally {
+            generateButton.disabled = false;
+            generateButton.textContent = "Generate Random Party";
         }
     });
 });
