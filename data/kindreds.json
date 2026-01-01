@@ -4,7 +4,7 @@
         "adventurer_class_table": {
             "1-5": "Fighter",
             "6-8": "Hunter",
-            "9-10": "Minstrel",
+            "9-10": "Bard",
             "11-20": "Thief"
         }
     },
@@ -15,7 +15,7 @@
             "2-5": "Fighter",
             "6-7": "Hunter",
             "8-8": "Knight",
-            "9-10": "Minstrel",
+            "9-10": "Bard",
             "11-12": "Thief",
             "13-20": "Magic-User"
         }
