@@ -58,12 +58,7 @@ async function generateParty() {
         }
 
         let magic = "";
-        if (characterClass === "Bard") {
-            let targets = "Mortals";
-            if (level >= 4) targets += ", Animals, Demi-fey";
-            if (level >= 7) targets += ", Fairies, Monstrosities";
-            magic = `<strong>Unique Ability:</strong> Counter Charm<br><strong>Enchantment:</strong> Can fascinate ${targets}`;
-        } else if (characterClass === "Magician") {
+        if (characterClass === "Magician") {
             let spells = [];
             for(let i=0; i<level+1; i++) spells.push(gameData.spells.Arcane[Math.floor(Math.random() * gameData.spells.Arcane.length)]);
             magic = `<strong>Arcane Spells:</strong> ${[...new Set(spells)].join(", ")}`;
@@ -71,7 +66,7 @@ async function generateParty() {
             let spells = [];
             let spellCount = (characterClass === "Cleric" && level < 2) ? 0 : level;
             for(let i=0; i<spellCount; i++) spells.push(gameData.spells.Holy[Math.floor(Math.random() * gameData.spells.Holy.length)]);
-            magic = spells.length > 0 ? `<strong>Prayers:</strong> ${[...new Set(spells)].join(", ")}` : "No prayers prepared yet.";
+            magic = spells.length > 0 ? `<strong>Holy Spells:</strong> ${[...new Set(spells)].join(", ")}` : "No holy spells prepared yet.";
         } else if (characterClass === "Enchanter") {
             let glamours = [];
             for(let i=0; i<level; i++) glamours.push(gameData.spells.Glamours[Math.floor(Math.random() * gameData.spells.Glamours.length)]);
@@ -104,7 +99,7 @@ async function generateParty() {
         art_objects: Math.random() < 0.1 ? roll('1d4') : 0
     };
 
-    const mounts = Math.random() < 0.75 ? 'Riding horses' : 'On foot';
+    const mounts = Math.random() < 0.75 ? 'Riding horses (if encountered on road or in settlement)' : 'On foot';
     const quest = gameData.quests[partyAlignment][Math.floor(Math.random() * gameData.quests[partyAlignment].length)];
 
     return {
