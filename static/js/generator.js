@@ -104,7 +104,7 @@ async function generateParty() {
         art_objects: Math.random() < 0.1 ? roll('1d4') : 0
     };
 
-    const mounts = Math.random() < 0.75 ? 'Riding horses' : 'None';
+    const mounts = Math.random() < 0.75 ? 'Riding horses' : 'On foot';
     const quest = gameData.quests[partyAlignment][Math.floor(Math.random() * gameData.quests[partyAlignment].length)];
 
     return {
