@@ -1,4 +1,11 @@
+// ⚡ Bolt: Cache game data to avoid redundant network requests.
+// The data is fetched once and stored in memory for subsequent party generations.
+let gameDataCache = null;
 async function getGameData() {
+    if (gameDataCache) {
+        return gameDataCache;
+    }
+
     const files = ['adventurer_kindred', 'kindreds', 'alignments', 'quests', 'names', 'spells'];
     const promises = files.map(file => fetch(`data/${file}.json`).then(response => response.json()));
     const results = await Promise.all(promises);
@@ -6,6 +13,8 @@ async function getGameData() {
     files.forEach((file, index) => {
         data[file] = results[index];
     });
+
+    gameDataCache = data;
     return data;
 }
 
