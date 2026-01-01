@@ -24,10 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 html += `
                     <div class="card">
                         <div class="name">${c.name}</div>
-                        <div class="class-line">${c.kindred} ${c.class} (Level ${c.level})</div>
+                        <div class="class-line">${c.kindred} ${c.class} (level ${c.level})</div>
                         <div style="margin-bottom: 10px;">
                             <div class="stat-line"><span class="stat-label">Alignment:</span> ${c.alignment}</div>
-                            <div class="stat-line"><span class="stat-label">Gear:</span> Standard Class Equipment</div>
                             ${c.magicItems.length > 0 ? `<div class="stat-line"><span class="stat-label">Magic Items:</span> ${c.magicItems.join(", ")}</div>` : ""}
                         </div>
                         ${c.magic ? `<div class="magic-box">${c.magic}</div>` : ""}
@@ -38,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             outputDisplay.innerHTML = html;
 
         } catch (e) {
-            errorLog.innerHTML = "Error: " + e.message;
+            errorLog.innerHTML = "Error: " + e.message + "<br><pre>" + e.stack + "</pre>";
             console.error(e);
         } finally {
             generateButton.disabled = false;
