@@ -2,22 +2,73 @@
     "breggle": {
         "name": "Breggle",
         "adventurer_class_table": {
-            "1-5": "Fighter",
-            "6-8": "Hunter",
-            "9-10": "Bard",
-            "11-20": "Thief"
+            "1-1": "Bard",
+            "2-2": "Cleric",
+            "3-3": "Enchanter",
+            "4-8": "Fighter",
+            "9-9": "Friar",
+            "10-11": "Hunter",
+            "12-15": "Knight",
+            "16-18": "Magician",
+            "19-20": "Thief"
+        }
+    },
+    "elf": {
+        "name": "Elf",
+        "adventurer_class_table": {
+            "1-2": "Bard",
+            "3-8": "Enchanter",
+            "9-12": "Fighter",
+            "13-15": "Hunter",
+            "16-17": "Magician",
+            "18-20": "Thief"
+        }
+    },
+    "grimalkin": {
+        "name": "Grimalkin",
+        "adventurer_class_table": {
+            "1-4": "Bard",
+            "5-8": "Enchanter",
+            "9-10": "Fighter",
+            "11-14": "Hunter",
+            "15-16": "Magician",
+            "17-20": "Thief"
         }
     },
     "human": {
         "name": "Human",
         "adventurer_class_table": {
-            "1-1": "Friar",
-            "2-5": "Fighter",
-            "6-7": "Hunter",
-            "8-8": "Knight",
-            "9-10": "Bard",
-            "11-12": "Thief",
-            "13-20": "Magic-User"
+            "1-2": "Bard",
+            "3-5": "Cleric",
+            "6-6": "Enchanter",
+            "7-10": "Fighter",
+            "11-12": "Friar",
+            "13-14": "Hunter",
+            "15-16": "Knight",
+            "17-18": "Magician",
+            "19-20": "Thief"
+        }
+    },
+    "mossling": {
+        "name": "Mossling",
+        "adventurer_class_table": {
+            "1-3": "Bard",
+            "4-4": "Enchanter",
+            "5-10": "Fighter",
+            "11-16": "Hunter",
+            "17-17": "Magician",
+            "18-20": "Thief"
+        }
+    },
+    "woodgrue": {
+        "name": "Woodgrue",
+        "adventurer_class_table": {
+            "1-5": "Bard",
+            "6-8": "Enchanter",
+            "9-10": "Fighter",
+            "11-14": "Hunter",
+            "15-16": "Magician",
+            "17-20": "Thief"
         }
     }
 }
