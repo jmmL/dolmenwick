@@ -1,0 +1,23 @@
+{
+    "breggle": {
+        "name": "Breggle",
+        "adventurer_class_table": {
+            "1-5": "Fighter",
+            "6-8": "Hunter",
+            "9-10": "Minstrel",
+            "11-20": "Thief"
+        }
+    },
+    "human": {
+        "name": "Human",
+        "adventurer_class_table": {
+            "1-1": "Friar",
+            "2-5": "Fighter",
+            "6-7": "Hunter",
+            "8-8": "Knight",
+            "9-10": "Minstrel",
+            "11-12": "Thief",
+            "13-20": "Magic-User"
+        }
+    }
+}

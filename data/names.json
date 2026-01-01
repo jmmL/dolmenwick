@@ -1,0 +1,10 @@
+{
+    "breggle": {
+        "first_names": ["Beb", "Bog", "Gub"],
+        "surnames": ["Grizzle", "Flog", "Toadstool"]
+    },
+    "human": {
+        "first_names": ["Alaric", "Brynn", "Cedric"],
+        "surnames": ["Blackwood", "Stonehand", "Swift"]
+    }
+}
