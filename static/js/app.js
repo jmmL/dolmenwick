@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             outputDisplay.innerHTML = html;
 
         } catch (e) {
-            errorLog.innerHTML = "Error: " + e.message;
+            errorLog.innerHTML = "Error: " + e.message + "<br><pre>" + e.stack + "</pre>";
             console.error(e);
         } finally {
             generateButton.disabled = false;

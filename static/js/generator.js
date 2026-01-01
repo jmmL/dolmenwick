@@ -40,6 +40,47 @@ function lookupResult(rollValue, table) {
     return null;
 }
 
+function generateName(kindredName, namesData) {
+    const kindredNameData = namesData[kindredName.toLowerCase()];
+    let firstName, surname;
+
+    switch (kindredName.toLowerCase()) {
+        case 'breggle':
+        case 'human':
+        case 'mossling':
+        case 'woodgrue':
+            const roll = Math.random();
+            if (roll < 1/3) {
+                firstName = kindredNameData.male[Math.floor(Math.random() * kindredNameData.male.length)];
+            } else if (roll < 2/3) {
+                firstName = kindredNameData.female[Math.floor(Math.random() * kindredNameData.female.length)];
+            } else {
+                firstName = kindredNameData.unisex[Math.floor(Math.random() * kindredNameData.unisex.length)];
+            }
+            surname = kindredNameData.surname[Math.floor(Math.random() * kindredNameData.surname.length)];
+            return `${firstName} ${surname}`;
+
+        case 'elf':
+            if (Math.random() < 0.5) {
+                return kindredNameData.courtly[Math.floor(Math.random() * kindredNameData.courtly.length)];
+            } else {
+                return kindredNameData.rustic[Math.floor(Math.random() * kindredNameData.rustic.length)];
+            }
+
+        case 'grimalkin':
+            firstName = kindredNameData.first_name[Math.floor(Math.random() * kindredNameData.first_name.length)];
+            if (firstName.includes('/')) {
+                const options = firstName.split('/');
+                firstName = Math.random() < 0.5 ? options[0] : options[1];
+            }
+            surname = kindredNameData.surname[Math.floor(Math.random() * kindredNameData.surname.length)];
+            return `${firstName} ${surname}`;
+
+        default:
+            return "Unknown Kindred";
+    }
+}
+
 async function generateParty() {
     const gameData = await getGameData();
     const partySize = roll('1d4+4');
@@ -57,9 +98,7 @@ async function generateParty() {
 
         let fullName;
         while (true) {
-            const firstName = gameData.names[kindredName].first_names[Math.floor(Math.random() * gameData.names[kindredName].first_names.length)];
-            const surname = gameData.names[kindredName].surnames[Math.floor(Math.random() * gameData.names[kindredName].surnames.length)];
-            fullName = `${firstName} ${surname}`;
+            fullName = generateName(kindredName, gameData.names);
             if (!usedNames.has(fullName)) {
                 usedNames.add(fullName);
                 break;
