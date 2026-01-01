@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="stat-line"><span class="stat-label">Alignment:</span> ${c.alignment}</div>
                             <div class="stat-line"><span class="stat-label">Gear:</span> Standard Class Equipment</div>
                             ${c.magicItems.length > 0 ? `<div class="stat-line"><span class="stat-label">Magic Items:</span> ${c.magicItems.join(", ")}</div>` : ""}
-                            ${c.trinket !== "None" ? `<div class="stat-line"><span class="stat-label">Possession:</span> ${c.trinket}</div>` : ""}
                         </div>
                         ${c.magic ? `<div class="magic-box">${c.magic}</div>` : ""}
                     </div>`;

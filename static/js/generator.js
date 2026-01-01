@@ -91,7 +91,6 @@ async function generateParty() {
             class: characterClass,
             level: level,
             alignment: partyAlignment,
-            trinket: roll('1d6') <= 2 ? 'Random trinket' : 'None',
             magic: magic,
             magicItems: magicItems
         });
