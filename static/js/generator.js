@@ -1,10 +1,11 @@
 async function getGameData() {
-    const data = {};
     const files = ['adventurer_kindred', 'kindreds', 'alignments', 'quests', 'names', 'spells'];
-    for (const file of files) {
-        const response = await fetch(`data/${file}.json`);
-        data[file] = await response.json();
-    }
+    const promises = files.map(file => fetch(`data/${file}.json`).then(response => response.json()));
+    const results = await Promise.all(promises);
+    const data = {};
+    files.forEach((file, index) => {
+        data[file] = results[index];
+    });
     return data;
 }
 
