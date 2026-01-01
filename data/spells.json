@@ -1,0 +1,6 @@
+{
+    "Holy": ["Lesser Healing", "Detect Evil", "Detect Magic", "Frost Ward", "Light", "Mantle of Protection", "Purify Food and Drink", "Rally", "Bless", "Hold Person", "Silence", "Speak with Animals"],
+    "Arcane": ["Crystal Resonance", "Decipher", "Fairy Servant", "Firelight", "Floating Disc", "Glyph of Sealing", "Ignite/Extinguish", "Ingratiate", "Ioun Shard", "Shield of Force", "Vapours of Dream", "Ventriloquism"],
+    "Glamours": ["Awe", "Beguilement", "Breath of the Wind", "Cloak of Darkness", "Conjure Treats", "Dancing Flame", "Disguise Object", "Fairy Dust", "Flame Charm", "Fool’s Gold", "Forgetting", "Moon Sight"],
+    "Runes": ["Deathly Blossom", "Fog Cloud", "Gust of Wind", "Proof Against Deadly Harm", "Rune of Vanishing", "Sway the Mortal Mind"]
+}

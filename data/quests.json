@@ -1,14 +1,11 @@
 {
     "Lawful": [
-        "Placeholder Lawful Quest 1",
-        "Placeholder Lawful Quest 2"
+        "Locate a lost shrine and report to the Bishop of Brackenwold."
     ],
     "Neutral": [
-        "Placeholder Neutral Quest 1",
-        "Placeholder Neutral Quest 2"
+        "Search for magical herbs/fungi in Mulchgrove."
     ],
     "Chaotic": [
-        "Placeholder Chaotic Quest 1",
-        "Placeholder Chaotic Quest 2"
+        "Rob any weaker looking groups they encounter."
     ]
 }

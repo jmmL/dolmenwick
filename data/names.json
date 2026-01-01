@@ -1,10 +1,26 @@
 {
     "breggle": {
-        "first_names": ["Beb", "Bog", "Gub"],
-        "surnames": ["Grizzle", "Flog", "Toadstool"]
+        "first_names": ["Aele", "Braembel", "Broob", "Crump", "Drerdl", "Frennig", "Grerg", "Llerg", "Lope", "Mashker"],
+        "surnames": ["Blathergripe", "Bockbrugh", "Lockehorn", "Underbuck", "Wolder"]
+    },
+    "elf": {
+        "first_names": ["Bucket-and-Broth", "Candle-Bent-Sidewise", "Glance-Askew-Guillem", "Jack-of-Many-Colours", "Lace-and-Polkadot"],
+        "surnames": ["of the High Spires", "of the Glimmering Vale", "of the Dusk", "the Exile"]
     },
     "human": {
-        "first_names": ["Alaric", "Brynn", "Cedric"],
-        "surnames": ["Blackwood", "Stonehand", "Swift"]
+        "first_names": ["Arfred", "Brom", "Bunk", "Chydewick", "Crump", "Dimothy", "Guillem", "Henrick", "Hogrid", "Jappser"],
+        "surnames": ["Addercapper", "Burl", "Candleswick", "Crumwaller", "Lank", "Smith"]
+    },
+    "grimalkin": {
+        "first_names": ["Boots", "Fripple", "Ginger", "Jack", "Jaspy", "Jasqueline", "Kitty", "Little"],
+        "surnames": ["Bobblewhisk", "Cottonsocks", "Pouncemouse", "Ratbane", "Whiskers"]
+    },
+    "mossling": {
+        "first_names": ["Dombo", "Gobd", "Gobulom", "Golobd", "Gremo", "Gwomotom", "Hollogowl"],
+        "surnames": ["Barkhop", "Mouldfinger", "Mudfoot", "Mushrump", "Sodwallow"]
+    },
+    "woodgrue": {
+        "first_names": ["Bagnack", "Barmcudgel", "Bloomfext", "Bunglebone", "Capratt", "Chimm"],
+        "surnames": ["Bobbleslime", "Bogbabble", "Lankwobble", "Snodgrass", "Woodfuffle"]
     }
 }
