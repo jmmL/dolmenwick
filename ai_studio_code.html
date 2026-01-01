@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dolmenwood Party Generator</title>
+    <style>
+        body { font-family: 'Georgia', serif; background-color: #1a1a1b; color: #d1d1d1; padding: 20px; max-width: 1000px; margin: auto; }
+        .container { background-color: #2c2c2e; padding: 30px; border-radius: 12px; border: 1px solid #444; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
+        h1 { color: #c24d2c; text-align: center; text-transform: uppercase; border-bottom: 2px solid #c24d2c; padding-bottom: 10px; }
+        button { display: block; margin: 20px auto; background-color: #c24d2c; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.2em; font-weight: bold; }
+        button:hover { background-color: #e05a35; }
+        .party-summary { background: #232325; padding: 20px; border: 2px solid #c24d2c; margin-bottom: 30px; border-radius: 8px; }
+        .character-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+        .card { background: #3a3a3c; padding: 20px; border-radius: 8px; border-bottom: 4px solid #c24d2c; display: flex; flex-direction: column; }
+        .name { font-size: 1.4em; color: #ffcc00; font-weight: bold; margin-bottom: 5px; }
+        .class-line { font-style: italic; color: #bbb; border-bottom: 1px solid #555; padding-bottom: 10px; margin-bottom: 10px; }
+        .stat-label { font-weight: bold; color: #8ebf42; }
+        .magic-box { background: #232325; padding: 12px; margin-top: auto; border-radius: 4px; border-left: 3px solid #ffcc00; font-size: 0.9em; }
+        .placeholder { color: #888; font-style: italic; }
+        #error-log { color: #ff4444; font-family: monospace; margin-top: 20px; font-size: 0.8em; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Dolmenwood NPC Party Generator</h1>
+    <button onclick="generateParty()">Generate Random Party</button>
+    <div id="output"></div>
+    <div id="error-log"></div>
+</div>
+
+<script>
+    // Robust rolling functions
+    const roll = (sides) => Math.floor(Math.random() * sides) + 1;
+    const rollTable = (arr) => arr[roll(arr.length) - 1];
+
+    // --- DATA FROM DPB & DMB ---
+
+    const DATA = {
+        Names: {
+            "Breggle": ["Aele", "Braembel", "Broob", "Crump", "Drerdl", "Frennig", "Grerg", "Llerg", "Lope", "Mashker"],
+            "Elf": ["Bucket-and-Broth", "Candle-Bent-Sidewise", "Glance-Askew-Guillem", "Jack-of-Many-Colours", "Lace-and-Polkadot"],
+            "Human": ["Arfred", "Brom", "Bunk", "Chydewick", "Crump", "Dimothy", "Guillem", "Henrick", "Hogrid", "Jappser"],
+            "Grimalkin": ["Boots", "Fripple", "Ginger", "Jack", "Jaspy", "Jasqueline", "Kitty", "Little"],
+            "Mossling": ["Dombo", "Gobd", "Gobulom", "Golobd", "Gremo", "Gwomotom", "Hollogowl"],
+            "Woodgrue": ["Bagnack", "Barmcudgel", "Bloomfext", "Bunglebone", "Capratt", "Chimm"]
+        },
+        Surnames: {
+            "Breggle": ["Blathergripe", "Bockbrugh", "Lockehorn", "Underbuck", "Wolder"],
+            "Elf": ["of the High Spires", "of the Glimmering Vale", "of the Dusk", "the Exile"],
+            "Human": ["Addercapper", "Burl", "Candleswick", "Crumwaller", "Lank", "Smith"],
+            "Grimalkin": ["Bobblewhisk", "Cottonsocks", "Pouncemouse", "Ratbane", "Whiskers"],
+            "Mossling": ["Barkhop", "Mouldfinger", "Mudfoot", "Mushrump", "Sodwallow"],
+            "Woodgrue": ["Bobbleslime", "Bogbabble", "Lankwobble", "Snodgrass", "Woodfuffle"]
+        },
+        Spells: {
+            Holy: ["Lesser Healing", "Detect Evil", "Detect Magic", "Frost Ward", "Light", "Mantle of Protection", "Purify Food and Drink", "Rally", "Bless", "Hold Person", "Silence", "Speak with Animals"],
+            Arcane: ["Crystal Resonance", "Decipher", "Fairy Servant", "Firelight", "Floating Disc", "Glyph of Sealing", "Ignite/Extinguish", "Ingratiate", "Ioun Shard", "Shield of Force", "Vapours of Dream", "Ventriloquism"],
+            Glamours: ["Awe", "Beguilement", "Breath of the Wind", "Cloak of Darkness", "Conjure Treats", "Dancing Flame", "Disguise Object", "Fairy Dust", "Flame Charm", "Fool’s Gold", "Forgetting", "Moon Sight"],
+            Runes: ["Deathly Blossom", "Fog Cloud", "Gust of Wind", "Proof Against Deadly Harm", "Rune of Vanishing", "Sway the Mortal Mind"]
+        },
+        Quests: {
+            Lawful: "Locate a lost shrine and report to the Bishop of Brackenwold.",
+            Neutral: "Search for magical herbs/fungi in Mulchgrove.",
+            Chaotic: "Rob any weaker looking groups they encounter."
+        }
+    };
+
+    function getKindred() {
+        const r = roll(12);
+        if (r <= 3) return "Breggle";
+        if (r === 4) return "Elf";
+        if (r === 5) return "Grimalkin";
+        if (r <= 10) return "Human";
+        if (r === 11) return "Mossling";
+        return "Woodgrue";
+    }
+
+    function getClass(kindred) {
+        const r = roll(20);
+        // Table from Monster Book p. 108
+        const tables = {
+            "Breggle": { 1:"Bard", 2:"Cleric", 3:"Enchanter", "4-8":"Fighter", 9:"Friar", "10-11":"Hunter", "12-15":"Knight", "16-18":"Magician", "19-20":"Thief" },
+            "Elf": { "1-2":"Bard", "3-8":"Enchanter", "9-12":"Fighter", "13-15":"Hunter", "16-17":"Magician", "18-20":"Thief" },
+            "Grimalkin": { "1-4":"Bard", "5-8":"Enchanter", "9-10":"Fighter", "11-14":"Hunter", "15-16":"Magician", "17-20":"Thief" },
+            "Human": { "1-2":"Bard", "3-5":"Cleric", 6:"Enchanter", "7-10":"Fighter", "11-12":"Friar", "13-14":"Hunter", "15-16":"Knight", "17-18":"Magician", "19-20":"Thief" },
+            "Mossling": { "1-3":"Bard", 4:"Enchanter", "5-10":"Fighter", "11-16":"Hunter", 17:"Magician", "18-20":"Thief" },
+            "Woodgrue": { "1-5":"Bard", "6-8":"Enchanter", "9-10":"Fighter", "11-14":"Hunter", "15-16":"Magician", "17-20":"Thief" }
+        };
+        
+        const table = tables[kindred];
+        for (let key in table) {
+            if (key.includes('-')) {
+                const [min, max] = key.split('-').map(Number);
+                if (r >= min && r <= max) return table[key];
+            } else if (Number(key) === r) {
+                return table[key];
+            }
+        }
+        return "Fighter";
+    }
+
+    function generateCharacter(isHighLevel) {
+        const kindred = getKindred();
+        const charClass = getClass(kindred);
+        const level = isHighLevel ? roll(6) + 3 : roll(3);
+        const name = rollTable(DATA.Names[kindred]) + " " + rollTable(DATA.Surnames[kindred]);
+        
+        let alignmentRoll = roll(6);
+        let alignment = alignmentRoll <= 2 ? "Lawful" : (alignmentRoll <= 4 ? "Neutral" : "Chaotic");
+
+        let magic = "";
+        // Logic for Bards (DPB p. 60)
+        if (charClass === "Bard") {
+            let targets = "Mortals";
+            if (level >= 4) targets += ", Animals, Demi-fey";
+            if (level >= 7) targets += ", Fairies, Monstrosities";
+            magic = `<strong>Unique Ability:</strong> Counter Charm<br><strong>Enchantment:</strong> Can fascinate ${targets}`;
+        } 
+        // Logic for Magicians (DPB p. 75)
+        else if (charClass === "Magician") {
+            let spells = [];
+            for(let i=0; i<level+1; i++) spells.push(rollTable(DATA.Spells.Arcane));
+            magic = `<strong>Arcane Spells:</strong> ${[...new Set(spells)].join(", ")}`;
+        } 
+        // Logic for Clerics/Friars (DPB p. 63/69)
+        else if (charClass === "Cleric" || charClass === "Friar") {
+            let spells = [];
+            let spellCount = (charClass === "Cleric" && level < 2) ? 0 : level;
+            for(let i=0; i<spellCount; i++) spells.push(rollTable(DATA.Spells.Holy));
+            magic = spells.length > 0 ? `<strong>Prayers:</strong> ${[...new Set(spells)].join(", ")}` : "No prayers prepared yet.";
+        } 
+        // Logic for Enchanters (DPB p. 65)
+        else if (charClass === "Enchanter") {
+            let glamours = [];
+            for(let i=0; i<level; i++) glamours.push(rollTable(DATA.Spells.Glamours));
+            let rune = level >= 1 ? `<br><strong>Rune:</strong> ${rollTable(DATA.Spells.Runes)}` : "";
+            magic = `<strong>Glamours:</strong> ${[...new Set(glamours)].join(", ")}${rune}`;
+        }
+
+        // Magic Items (Monster Book p. 108: 5% per level per category)
+        let magicItems = [];
+        const categories = ["Armour", "Ring", "Weapon", "Potion", "Rod/Staff", "Scroll", "Wondrous"];
+        categories.forEach(cat => {
+            if (roll(100) <= (level * 5)) magicItems.push(`${cat} <span class="placeholder">[DCB Table]</span>`);
+        });
+
+        return { name, kindred, charClass, level, alignment, magic, magicItems };
+    }
+
+    function generateParty() {
+        try {
+            document.getElementById('error-log').innerHTML = "";
+            const size = roll(4) + 4;
+            const isHighLevel = roll(6) === 6; // 1-in-6 chance
+            const party = [];
+            for(let i=0; i<size; i++) party.push(generateCharacter(isHighLevel));
+
+            // Determine dominant alignment for Quest (Monster Book p. 109)
+            let counts = party.reduce((acc, c) => { acc[c.alignment]++; return acc; }, {Lawful:0, Neutral:0, Chaotic:0});
+            let dominant = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+
+            let html = `
+                <div class="party-summary">
+                    <strong>Party Composition:</strong> ${size} adventurers | 
+                    ${isHighLevel ? "High Level" : "Low Level"} | 
+                    ${roll(100) <= 75 ? "Mounted" : "On Foot"}<br>
+                    <strong>Current Quest (${dominant}):</strong> ${DATA.Quests[dominant]}<br>
+                    <strong>Shared Wealth:</strong> ${roll(100)}gp, ${roll(100)}sp, ${roll(100)}cp 
+                    <span class="placeholder">[Gems/Art 10% chance: ${roll(100) <= 10 ? "Yes" : "No"}]</span>
+                </div>
+                <div class="character-grid">`;
+
+            party.forEach(c => {
+                html += `
+                    <div class="card">
+                        <div class="name">${c.name}</div>
+                        <div class="class-line">Level ${c.level} ${c.kindred} ${c.charClass}</div>
+                        <div style="margin-bottom: 10px;">
+                            <div class="stat-line"><span class="stat-label">Alignment:</span> ${c.alignment}</div>
+                            <div class="stat-line"><span class="stat-label">Gear:</span> Standard Class Equipment <span class="placeholder">[DPB p118]</span></div>
+                            ${c.magicItems.length > 0 ? `<div class="stat-line"><span class="stat-label">Magic Items:</span> ${c.magicItems.join(", ")}</div>` : ""}
+                            ${roll(6) <= 2 ? `<div class="stat-line"><span class="stat-label">Possession:</span> <span class="placeholder">Random Trinket/Herb [DPB]</span></div>` : ""}
+                        </div>
+                        ${c.magic ? `<div class="magic-box">${c.magic}</div>` : ""}
+                    </div>`;
+            });
+
+            html += `</div>`;
+            document.getElementById('output').innerHTML = html;
+
+        } catch (e) {
+            document.getElementById('error-log').innerHTML = "Error: " + e.message;
+            console.error(e);
+        }
+    }
+</script>
+
+</body>
+</html>
