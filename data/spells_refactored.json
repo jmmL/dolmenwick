@@ -1,0 +1,174 @@
+{
+  "arcane": {
+    "rank1": [
+      "Arcane Deception",
+      "Charm",
+      "Comprehend Languages",
+      "Detect Magic",
+      "Floating Disc",
+      "Hold Portal",
+      "Light",
+      "Magic Missile",
+      "Protection from Evil",
+      "Read Magic",
+      "Sleep",
+      "Ventriloquism"
+    ],
+    "rank2": [
+      "Arcane Eye",
+      "Continual Light",
+      "Detect Evil",
+      "Invisibility",
+      "Knock",
+      "Levitate",
+      "Locate Object",
+      "Mirror Image",
+      "Phantasmal Force",
+      "Web",
+      "Wizard Lock"
+    ],
+    "rank3": [
+      "Clairvoyance",
+      "Dispel Magic",
+      "Fireball",
+      "Fly",
+      "Haste",
+      "Hold Person",
+      "Invisibility Sphere",
+      "Lightning Bolt",
+      "Protection from Evil 10' Radius",
+      "Water Breathing"
+    ],
+    "rank4": [
+      "Confusion",
+      "Dimension Door",
+      "Fear",
+      "Growth of Plants",
+      "Hallucinatory Terrain",
+      "Massmorph",
+      "Polymorph Self",
+      "Remove Curse",
+      "Wall of Fire",
+      "Wall of Ice",
+      "Wizard Eye"
+    ],
+    "rank5": [
+      "Animate Dead",
+      "Cloudkill",
+      "Conjure Elemental",
+      "Contact Higher Plane",
+      "Feeblemind",
+      "Hold Monster",
+      "Magic Jar",
+      "Passwall",
+      "Telekinesis",
+      "Teleport",
+      "Wall of Stone"
+    ]
+  },
+  "holy": {
+    "rank1": [
+      "Cure Light Wounds",
+      "Detect Evil",
+      "Detect Magic",
+      "Light",
+      "Protection from Evil",
+      "Purify Food and Drink",
+      "Remove Fear",
+      "Resist Cold"
+    ],
+    "rank2": [
+      "Bless",
+      "Delay Poison",
+      "Find Traps",
+      "Hold Person",
+      "Know Alignment",
+      "Silence 15' Radius",
+      "Snake Charm",
+      "Speak with Animals"
+    ],
+    "rank3": [
+      "Continual Light",
+      "Cure Disease",
+      "Growth of Animal",
+      "Locate Object",
+      "Remove Curse",
+      "Speak with the Dead",
+      "Striking"
+    ],
+    "rank4": [
+      "Create Water",
+      "Cure Serious Wounds",
+      "Dispel Evil",
+      "Neutralize Poison",
+      "Protection from Evil 10' Radius",
+      "Speak with Plants",
+      "Sticks to Snakes"
+    ],
+    "rank5": [
+      "Commune",
+      "Create Food",
+      "Dispel Dragon",
+      "Insect Plague",
+      "Quest",
+      "Raise Dead",
+      "True Seeing"
+    ]
+  },
+  "glamours": [
+    "Awe",
+    "Beguilement",
+    "Breath of the Wind",
+    "Cloak of Darkness",
+    "Conjure Treats",
+    "Dancing Flame",
+    "Disguise Object",
+    "Fairy Dust",
+    "Flame Charm",
+    "Fool's Gold",
+    "Forgetting",
+    "Masquerade",
+    "Mirth and Malice",
+    "Moon Sight",
+    "Seeming",
+    "Silver Tongue",
+    "Subtle Sight",
+    "Through the Keyhole",
+    "Vanishing",
+    "Walk in Shadows"
+  ],
+  "runes": {
+    "lesser": [
+      "Deathly Blossom",
+      "Fog Cloud",
+      "Gust of Wind",
+      "Proof Against Deadly Harm",
+      "Rune of Vanishing",
+      "Sway the Mortal Mind"
+    ],
+    "greater": [
+      "Arcane Unbinding",
+      "Fairy Gold",
+      "Fairy Steed",
+      "Ice Storm",
+      "Rune of Invisibility",
+      "Sway the Mind"
+    ],
+    "mighty": [
+      "Dream Ship",
+      "Eternal Slumber",
+      "Rune of Death",
+      "Rune of Wishing",
+      "Summon Wild Hunt",
+      "Unravel Death"
+    ]
+  },
+  "knacks": [
+    "Bird Friend",
+    "Lock Singer",
+    "Root Friend",
+    "Thread Whistling",
+    "Wood Kenning",
+    "Yeast Master"
+  ]
+}
