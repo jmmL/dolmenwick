@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generator.js Unit Tests</title>
+    <style>
+        body { font-family: sans-serif; }
+        .test-case { margin-bottom: 1em; }
+        .pass { color: green; }
+        .fail { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Unit Tests for generator.js</h1>
+    <div id="test-results"></div>
+
+    <script src="../static/js/generator.js"></script>
+
+    <script>
+        const resultsContainer = document.getElementById('test-results');
+        let gameData = {};
+
+        function test(description, testFn) {
+            const resultDiv = document.createElement('div');
+            resultDiv.classList.add('test-case');
+            try {
+                testFn();
+                resultDiv.innerHTML = `<span class="pass">PASS</span>: ${description}`;
+            } catch (e) {
+                resultDiv.innerHTML = `<span class="fail">FAIL</span>: ${description}<br><pre>${e.stack}</pre>`;
+            }
+            resultsContainer.appendChild(resultDiv);
+        }
+
+        function assert(condition, message) {
+            if (!condition) {
+                throw new Error(message || "Assertion failed");
+            }
+        }
+
+        async function runTests() {
+            try {
+                gameData = await getGameData('../');
+            } catch (e) {
+                resultsContainer.innerHTML = `<div class="fail">FATAL: Could not load game data. ${e.message}</div>`;
+                return;
+            }
+
+            test("Mossling should get a valid Knack from the simplified list", () => {
+                const mockAdventurer = { kindred: "Mossling", level: 1, class: "Fighter" };
+                const spells = assignSpells(mockAdventurer, gameData);
+                assert(spells.knack, "Result should have a 'knack' property");
+                assert(gameData.spells_refactored.knacks.includes(spells.knack), `Generated knack '${spells.knack}' is not in the data array.`);
+            });
+
+            test("Level 1 Elf Enchanter gets 1 Kindred Glamour + 1 Class Glamour", () => {
+                const mockAdventurer = { kindred: "Elf", level: 1, class: "Enchanter" };
+                const spells = assignSpells(mockAdventurer, gameData);
+                assert(spells.glamours && spells.glamours.length === 2, `Expected 2 glamours, but got ${spells.glamours ? spells.glamours.length : 0}`);
+            });
+
+            test("Enchanter level modifier function should return correct values", () => {
+                assert(getEnchanterLevelModifier(1) === 0, "Level 1-2 should have +0 modifier");
+                assert(getEnchanterLevelModifier(2) === 0, "Level 1-2 should have +0 modifier");
+                assert(getEnchanterLevelModifier(3) === 1, "Level 3-5 should have +1 modifier");
+                assert(getEnchanterLevelModifier(5) === 1, "Level 3-5 should have +1 modifier");
+                assert(getEnchanterLevelModifier(6) === 2, "Level 6-9 should have +2 modifier");
+                assert(getEnchanterLevelModifier(9) === 2, "Level 6-9 should have +2 modifier");
+                assert(getEnchanterLevelModifier(10) === 3, "Level 10+ should have +3 modifier");
+            });
+
+            test("Enchanter rune roll logic should map to correct rune types", () => {
+                // We can't test the random roll directly, but we can test the boundaries.
+                // Mock the roll function to control the outcome.
+                const originalRoll = window.roll;
+
+                // Test Lesser Rune boundary
+                window.roll = () => 2; // 2 + mod(0) = 2 -> should be no rune.
+                let spells = assignSpells({ kindred: "Human", class: "Enchanter", level: 1}, gameData);
+                assert(!spells.runes, "Roll of 2 should result in no rune");
+
+                window.roll = () => 3; // 3 + mod(0) = 3 -> lesser
+                spells = assignSpells({ kindred: "Human", class: "Enchanter", level: 1}, gameData);
+                assert(spells.runes && spells.runes.lesser.length === 1, "Roll of 3 should grant a lesser rune");
+
+                // Test Greater Rune boundary
+                window.roll = () => 7; // 7 + mod(1) @ Lvl 3 = 8 -> greater
+                spells = assignSpells({ kindred: "Human", class: "Enchanter", level: 3}, gameData);
+                assert(spells.runes && spells.runes.greater.length === 3, "Roll of 7 at Lvl 3 should grant 3 greater runes (1 per level)");
+
+                // Test Mighty Rune boundary
+                window.roll = () => 10; // 10 + mod(2) @ Lvl 6 = 12 -> mighty
+                spells = assignSpells({ kindred: "Human", class: "Enchanter", level: 6}, gameData);
+                assert(spells.runes && spells.runes.mighty.length === 6, "Roll of 10 at Lvl 6 should grant 6 mighty runes (1 per level)");
+
+                // Restore original roll function
+                window.roll = originalRoll;
+            });
+
+            test("Friar gets the correct number of Holy Spells by level", () => {
+                 const mockLvl1Friar = { kindred: "Human", level: 1, class: "Friar" };
+                 const spellsLvl1 = assignSpells(mockLvl1Friar, gameData);
+                 assert(spellsLvl1.holy.rank1.length === 1, "Lvl 1 Friar should have 1 rank1 spell");
+
+                 const mockLvl5Friar = { kindred: "Human", level: 5, class: "Friar" };
+                 const spellsLvl5 = assignSpells(mockLvl5Friar, gameData);
+                 assert(spellsLvl5.holy.rank1.length === 3, "Lvl 5 Friar should have 3 rank1 spells");
+                 assert(spellsLvl5.holy.rank2.length === 2, "Lvl 5 Friar should have 2 rank2 spells");
+            });
+        }
+
+        window.onload = runTests;
+    </script>
+</body>
+</html>
