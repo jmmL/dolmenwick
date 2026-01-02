@@ -76,8 +76,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (c.magic) {
                     const magicBox = document.createElement('div');
                     magicBox.className = 'magic-box';
-                    // The HTML here is from trusted, hardcoded strings in generator.js, not from user-controlled JSON data.
-                    magicBox.innerHTML = c.magic;
+
+                    // 🛡️ Sentinel: Securely render magic data using safe DOM methods.
+                    if (c.magic.message) {
+                        magicBox.textContent = c.magic.message;
+                    } else {
+                        const renderLine = (label, value) => {
+                            const line = document.createElement('div');
+                            const strong = document.createElement('strong');
+                            strong.textContent = `${label}: `;
+                            line.appendChild(strong);
+                            line.appendChild(document.createTextNode(value));
+                            return line;
+                        };
+
+                        if (c.magic.glamours) {
+                            magicBox.appendChild(renderLine('Glamours', c.magic.glamours.join(', ')));
+                        }
+                        if (c.magic.knack) {
+                            magicBox.appendChild(renderLine('Knack', c.magic.knack));
+                        }
+                        if (c.magic.arcane) {
+                            magicBox.appendChild(renderLine(c.magic.arcane.type, c.magic.arcane.list.join(', ')));
+                        }
+                        if (c.magic.holy) {
+                            magicBox.appendChild(renderLine(c.magic.holy.type, c.magic.holy.list.join(', ')));
+                        }
+                        if (c.magic.runes) {
+                            c.magic.runes.forEach(runeSet => {
+                                magicBox.appendChild(renderLine(runeSet.type, runeSet.list.join(', ')));
+                            });
+                        }
+                        if (c.magic.bard) {
+                             c.magic.bard.forEach(bardInfo => {
+                                magicBox.appendChild(renderLine(bardInfo.label, bardInfo.value));
+                            });
+                        }
+                    }
                     card.appendChild(magicBox);
                 }
                 grid.appendChild(card);

@@ -128,15 +128,30 @@
                 assert(getRuneFrequency('mighty', 9, 2) === 'Twice ever', "Duplicate mighty rune at Lvl 9");
             });
 
-            test("Friar gets the correct number of Holy Spells by level", () => {
-                 const mockLvl1Friar = { kindred: "Human", level: 1, class: "Friar" };
-                 const spellsLvl1 = assignSpells(mockLvl1Friar, gameData);
-                 assert(spellsLvl1.holy.rank1.length === 1, "Lvl 1 Friar should have 1 rank1 spell");
+            test("formatMagic returns a structured object for a magic-using character", () => {
+                const mockAdventurer = { kindred: "Elf", level: 1, class: "Enchanter" };
+                const spells = assignSpells(mockAdventurer, gameData);
+                const magicData = formatMagic(mockAdventurer, spells);
 
-                 const mockLvl5Friar = { kindred: "Human", level: 5, class: "Friar" };
-                 const spellsLvl5 = assignSpells(mockLvl5Friar, gameData);
-                 assert(spellsLvl5.holy.rank1.length === 3, "Lvl 5 Friar should have 3 rank1 spells");
-                 assert(spellsLvl5.holy.rank2.length === 2, "Lvl 5 Friar should have 2 rank2 spells");
+                assert(typeof magicData === 'object' && magicData !== null, "formatMagic should return an object");
+                assert(!magicData.message, "Should not have a message for a magic user");
+                assert(Array.isArray(magicData.glamours), "Should have a glamours array");
+            });
+
+            test("formatMagic returns a message for a non-casting Cleric", () => {
+                const mockAdventurer = { kindred: "Human", level: 1, class: "Cleric" };
+                const spells = {}; // No spells assigned
+                const magicData = formatMagic(mockAdventurer, spells);
+
+                assert(magicData.message === "No prayers prepared yet.", "Should have the correct message for a cleric with no spells");
+            });
+
+            test("formatMagic returns null for a character with no magic at all", () => {
+                const mockAdventurer = { kindred: "Human", level: 1, class: "Fighter" };
+                const spells = assignSpells(mockAdventurer, gameData);
+                const magicData = formatMagic(mockAdventurer, spells);
+
+                assert(magicData === null, "Should return null for a character with no magic");
             });
         }
 

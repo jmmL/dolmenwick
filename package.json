@@ -1,0 +1,15 @@
+{
+  "name": "dolmenwood-generator-tests",
+  "version": "1.0.0",
+  "description": "Tests for Dolmenwood NPC Party Generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.1"
+  }
+}

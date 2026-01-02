@@ -1,13 +1,13 @@
 // ⚡ Bolt: Cache game data to avoid redundant network requests.
 // The data is fetched once and stored in memory for subsequent party generations.
 let gameDataCache = null;
-async function getGameData() {
+async function getGameData(basePath = "") {
     if (gameDataCache) {
         return gameDataCache;
     }
 
     const files = ['adventurer_kindred', 'kindreds', 'alignments', 'quests', 'names', 'classes', 'spells_refactored'];
-    const promises = files.map(file => fetch(`data/${file}.json`).then(response => response.json()));
+    const promises = files.map(file => fetch(`${basePath}data/${file}.json`).then(response => response.json()));
     const results = await Promise.all(promises);
     const data = {};
     files.forEach((file, index) => {
@@ -179,43 +179,43 @@ function getRuneFrequency(runeType, level, count) {
     return baseFrequency;
 }
 
+// 🛡️ Sentinel: Refactored to return structured data instead of an HTML string to prevent XSS.
 function formatMagic(character, spells) {
     if (Object.keys(spells).length === 0) {
-        if (["Cleric", "Friar"].includes(character.class)) return "No prayers prepared yet.";
-        return "";
+        if (["Cleric", "Friar"].includes(character.class)) {
+            return { message: "No prayers prepared yet." };
+        }
+        return null;
     }
 
-    let html = '';
+    const magicData = {};
 
     if (spells.glamours && spells.glamours.length > 0) {
-        html += `<strong>Glamours:</strong> ${spells.glamours.join(', ')}<br>`;
+        magicData.glamours = spells.glamours;
     }
     if (spells.knack) {
-        html += `<strong>Knack:</strong> ${spells.knack}<br>`;
+        magicData.knack = spells.knack;
     }
 
-    const formatRankedSpells = (spellData, typeName) => {
+    const formatRankedSpells = (spellData) => {
         let spellList = [];
         Object.keys(spellData).sort().forEach(rank => {
             spellData[rank].forEach(spell => {
                 spellList.push(`${spell} (${rank})`);
             });
         });
-        if (spellList.length > 0) {
-            return `<strong>${typeName}:</strong> ${spellList.join(', ')}<br>`;
-        }
-        return '';
+        return spellList;
     };
 
-    if (spells.arcane) {
-        html += formatRankedSpells(spells.arcane, "Arcane Spells");
+    if (spells.arcane && Object.keys(spells.arcane).length > 0) {
+        magicData.arcane = { type: "Arcane Spells", list: formatRankedSpells(spells.arcane) };
     }
-    if (spells.holy) {
-        html += formatRankedSpells(spells.holy, "Holy Spells");
+    if (spells.holy && Object.keys(spells.holy).length > 0) {
+        magicData.holy = { type: "Holy Spells", list: formatRankedSpells(spells.holy) };
     }
 
     if (spells.runes) {
-        let runeHtmlParts = [];
+        const runeData = [];
         ['lesser', 'greater', 'mighty'].forEach(type => {
             if (Object.keys(spells.runes[type]).length > 0) {
                 const typeName = type.charAt(0).toUpperCase() + type.slice(1);
@@ -225,11 +225,11 @@ function formatMagic(character, spells) {
                     const frequency = getRuneFrequency(type, character.level, count);
                     runesForType.push(`${runeName} (${frequency})`);
                 }
-                runeHtmlParts.push(`<strong>${typeName} Runes:</strong> ${runesForType.join(', ')}`);
+                runeData.push({ type: `${typeName} Runes`, list: runesForType });
             }
         });
-        if (runeHtmlParts.length > 0) {
-            html += runeHtmlParts.join('<br>') + '<br>';
+        if (runeData.length > 0) {
+            magicData.runes = runeData;
         }
     }
 
@@ -237,10 +237,17 @@ function formatMagic(character, spells) {
         let targets = "Mortals";
         if (character.level >= 4) targets += ", Animals, Demi-fey";
         if (character.level >= 7) targets += ", Fairies, Monstrosities";
-        html += `<strong>Unique Ability:</strong> Counter Charm<br><strong>Enchantment:</strong> Can fascinate ${targets}`;
+        magicData.bard = [
+            { label: "Unique Ability", value: "Counter Charm" },
+            { label: "Enchantment", value: `Can fascinate ${targets}` }
+        ];
     }
 
-    return html.trim();
+    if (Object.keys(magicData).length === 0) {
+        return null;
+    }
+
+    return magicData;
 }
 
 
