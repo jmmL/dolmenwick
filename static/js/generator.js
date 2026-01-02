@@ -100,21 +100,36 @@ function assignSpells(character, gameData) {
             const glamourCount = magicRules.glamours_by_level ? magicRules.glamours_by_level[character.level] : 0;
             spells.glamours = getUniqueRandomItems(glamourCount, allSpells.glamours, spells.glamours || []);
 
-            const acquiredRunes = { lesser: [], greater: [], mighty: [] };
-            const levelModifier = getEnchanterLevelModifier(character.level);
+            const acquiredRunes = { lesser: {}, greater: {}, mighty: {} };
 
-            for (let i = 0; i < character.level; i++) { // One roll per level
+            for (let i = 1; i <= character.level; i++) { // One roll per level, from level 1 up to current.
+                const levelModifier = getEnchanterLevelModifier(i);
                 const runeRoll = roll('2d6') + levelModifier;
+                let runeType = null;
+                let runePool = null;
+
                 if (runeRoll >= 12) {
-                    acquiredRunes.mighty.push(getRandomItem(allSpells.runes.mighty));
+                    runeType = 'mighty';
+                    runePool = allSpells.runes.mighty;
                 } else if (runeRoll >= 8) {
-                    acquiredRunes.greater.push(getRandomItem(allSpells.runes.greater));
+                    runeType = 'greater';
+                    runePool = allSpells.runes.greater;
                 } else if (runeRoll >= 3) {
-                    acquiredRunes.lesser.push(getRandomItem(allSpells.runes.lesser));
+                    runeType = 'lesser';
+                    runePool = allSpells.runes.lesser;
+                }
+
+                if (runeType) {
+                    const runeName = getRandomItem(runePool);
+                    if (acquiredRunes[runeType][runeName]) {
+                        acquiredRunes[runeType][runeName]++;
+                    } else {
+                        acquiredRunes[runeType][runeName] = 1;
+                    }
                 }
             }
 
-            if (acquiredRunes.lesser.length > 0 || acquiredRunes.greater.length > 0 || acquiredRunes.mighty.length > 0) {
+            if (Object.keys(acquiredRunes.lesser).length > 0 || Object.keys(acquiredRunes.greater).length > 0 || Object.keys(acquiredRunes.mighty).length > 0) {
                 spells.runes = acquiredRunes;
             }
         }
@@ -124,10 +139,44 @@ function assignSpells(character, gameData) {
 }
 
 function getEnchanterLevelModifier(level) {
+    // SRD: 3-5: +1, 6-9: +2, 10+: +3
     if (level >= 10) return 3;
     if (level >= 6) return 2;
     if (level >= 3) return 1;
-    return 0;
+    return 0; // Level 1-2 is no modifier
+}
+
+function getRuneFrequency(runeType, level, count) {
+    let baseFrequency = '';
+    if (runeType === 'lesser') {
+        if (level <= 4) baseFrequency = 'Once per day';
+        else if (level <= 9) baseFrequency = 'Twice per day';
+        else baseFrequency = 'Thrice per day';
+    } else if (runeType === 'greater') {
+        if (level <= 4) baseFrequency = 'Once per Level';
+        else if (level <= 9) baseFrequency = 'Once per week';
+        else baseFrequency = 'Once per day';
+    } else if (runeType === 'mighty') {
+        if (level <= 9) baseFrequency = 'Once ever';
+        else baseFrequency = 'Once per year';
+    }
+
+    if (count > 1) {
+        // SRD: "If a rune is granted which the character already knows, the number of times it may be used is doubled."
+        // This is interpreted as doubling for each extra acquisition.
+        // e.g., 2x for 2 acquisitions, 4x for 3, etc.
+        const multiplier = Math.pow(2, count - 1);
+        if (baseFrequency.startsWith('Once')) {
+             if (multiplier === 2) return baseFrequency.replace('Once', 'Twice');
+             return `${multiplier} times${baseFrequency.substring(4)}`;
+        } else if (baseFrequency.startsWith('Twice')) {
+            return `${2 * multiplier} times${baseFrequency.substring(5)}`;
+        } else if (baseFrequency.startsWith('Thrice')) {
+            return `${3 * multiplier} times${baseFrequency.substring(6)}`;
+        }
+    }
+
+    return baseFrequency;
 }
 
 function formatMagic(character, spells) {
@@ -166,12 +215,22 @@ function formatMagic(character, spells) {
     }
 
     if (spells.runes) {
+        let runeHtmlParts = [];
         ['lesser', 'greater', 'mighty'].forEach(type => {
-            if (spells.runes[type] && spells.runes[type].length > 0) {
+            if (Object.keys(spells.runes[type]).length > 0) {
                 const typeName = type.charAt(0).toUpperCase() + type.slice(1);
-                html += `<strong>${typeName} Rune:</strong> ${spells.runes[type].join(', ')}<br>`;
+                let runesForType = [];
+                for (const runeName in spells.runes[type]) {
+                    const count = spells.runes[type][runeName];
+                    const frequency = getRuneFrequency(type, character.level, count);
+                    runesForType.push(`${runeName} (${frequency})`);
+                }
+                runeHtmlParts.push(`<strong>${typeName} Runes:</strong> ${runesForType.join(', ')}`);
             }
         });
+        if (runeHtmlParts.length > 0) {
+            html += runeHtmlParts.join('<br>') + '<br>';
+        }
     }
 
     if (character.class === "Bard") {

@@ -70,31 +70,62 @@
             });
 
             test("Enchanter rune roll logic should map to correct rune types", () => {
-                // We can't test the random roll directly, but we can test the boundaries.
-                // Mock the roll function to control the outcome.
                 const originalRoll = window.roll;
+                const originalGetRandomItem = window.getRandomItem;
+
+                // Mock getRandomItem to return a predictable value
+                window.getRandomItem = (arr) => arr[0];
 
                 // Test Lesser Rune boundary
-                window.roll = () => 2; // 2 + mod(0) = 2 -> should be no rune.
-                let spells = assignSpells({ kindred: "Human", class: "Enchanter", level: 1}, gameData);
-                assert(!spells.runes, "Roll of 2 should result in no rune");
+                window.roll = () => 2; // 2 + mod(0) at Lvl 1 = 2 -> no rune
+                let spells = assignSpells({ kindred: "Human", class: "Enchanter", level: 1 }, gameData);
+                assert(!spells.runes, "Roll of 2 at Lvl 1 should result in no rune");
 
-                window.roll = () => 3; // 3 + mod(0) = 3 -> lesser
-                spells = assignSpells({ kindred: "Human", class: "Enchanter", level: 1}, gameData);
-                assert(spells.runes && spells.runes.lesser.length === 1, "Roll of 3 should grant a lesser rune");
+                window.roll = () => 3; // 3 + mod(0) at Lvl 1 = 3 -> lesser
+                spells = assignSpells({ kindred: "Human", class: "Enchanter", level: 1 }, gameData);
+                assert(spells.runes && Object.keys(spells.runes.lesser).length === 1, "Roll of 3 at Lvl 1 should grant a lesser rune");
 
                 // Test Greater Rune boundary
-                window.roll = () => 7; // 7 + mod(1) @ Lvl 3 = 8 -> greater
-                spells = assignSpells({ kindred: "Human", class: "Enchanter", level: 3}, gameData);
-                assert(spells.runes && spells.runes.greater.length === 3, "Roll of 7 at Lvl 3 should grant 3 greater runes (1 per level)");
+                window.roll = () => 7;
+                spells = assignSpells({ kindred: "Human", class: "Enchanter", level: 3 }, gameData);
+                // Lvl 1: roll 7, mod 0 -> 7 -> lesser
+                // Lvl 2: roll 7, mod 0 -> 7 -> lesser
+                // Lvl 3: roll 7, mod 1 -> 8 -> greater
+                assert(spells.runes && Object.keys(spells.runes.lesser).length === 1 && spells.runes.lesser[gameData.spells_refactored.runes.lesser[0]] === 2, "Roll of 7 up to Lvl 3 should grant 2 lesser runes");
+                assert(spells.runes && Object.keys(spells.runes.greater).length === 1, "Roll of 7 up to Lvl 3 should grant 1 greater rune");
 
                 // Test Mighty Rune boundary
-                window.roll = () => 10; // 10 + mod(2) @ Lvl 6 = 12 -> mighty
-                spells = assignSpells({ kindred: "Human", class: "Enchanter", level: 6}, gameData);
-                assert(spells.runes && spells.runes.mighty.length === 6, "Roll of 10 at Lvl 6 should grant 6 mighty runes (1 per level)");
+                window.roll = () => 10;
+                spells = assignSpells({ kindred: "Human", class: "Enchanter", level: 6 }, gameData);
+                // Lvl 1-2: roll 10, mod 0 -> 10 -> greater
+                // Lvl 3-5: roll 10, mod 1 -> 11 -> greater
+                // Lvl 6: roll 10, mod 2 -> 12 -> mighty
+                assert(spells.runes && Object.keys(spells.runes.greater).length === 1 && spells.runes.greater[gameData.spells_refactored.runes.greater[0]] === 5, "Roll of 10 up to Lvl 6 should grant 5 greater runes");
+                assert(spells.runes && Object.keys(spells.runes.mighty).length === 1, "Roll of 10 up to Lvl 6 should grant 1 mighty rune");
 
-                // Restore original roll function
+                // Restore original functions
                 window.roll = originalRoll;
+                window.getRandomItem = originalGetRandomItem;
+            });
+
+            test("Rune frequency calculation should be correct", () => {
+                // Lesser runes
+                assert(getRuneFrequency('lesser', 1, 1) === 'Once per day', "Lesser rune at Lvl 1");
+                assert(getRuneFrequency('lesser', 5, 1) === 'Twice per day', "Lesser rune at Lvl 5");
+                assert(getRuneFrequency('lesser', 10, 1) === 'Thrice per day', "Lesser rune at Lvl 10");
+                assert(getRuneFrequency('lesser', 1, 2) === 'Twice per day', "Duplicate lesser rune at Lvl 1");
+                assert(getRuneFrequency('lesser', 5, 3) === '8 times per day', "Triple lesser rune at Lvl 5");
+
+                // Greater runes
+                assert(getRuneFrequency('greater', 1, 1) === 'Once per Level', "Greater rune at Lvl 1");
+                assert(getRuneFrequency('greater', 7, 1) === 'Once per week', "Greater rune at Lvl 7");
+                assert(getRuneFrequency('greater', 10, 1) === 'Once per day', "Greater rune at Lvl 10");
+                assert(getRuneFrequency('greater', 1, 2) === 'Twice per Level', "Duplicate greater rune at Lvl 1");
+
+                // Mighty runes
+                assert(getRuneFrequency('mighty', 9, 1) === 'Once ever', "Mighty rune at Lvl 9");
+                assert(getRuneFrequency('mighty', 10, 1) === 'Once per year', "Mighty rune at Lvl 10");
+                assert(getRuneFrequency('mighty', 9, 2) === 'Twice ever', "Duplicate mighty rune at Lvl 9");
             });
 
             test("Friar gets the correct number of Holy Spells by level", () => {
