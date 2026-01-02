@@ -1,6 +1,3 @@
-async function getGameData(basePath = '') {
-    const files = ['adventurer_kindred', 'kindreds', 'alignments', 'quests', 'names', 'classes', 'spells_refactored'];
-    const promises = files.map(file => fetch(`${basePath}data/${file}.json`).then(response => response.json()));
 // ⚡ Bolt: Cache game data to avoid redundant network requests.
 // The data is fetched once and stored in memory for subsequent party generations.
 let gameDataCache = null;
@@ -9,7 +6,7 @@ async function getGameData() {
         return gameDataCache;
     }
 
-    const files = ['adventurer_kindred', 'kindreds', 'alignments', 'quests', 'names', 'spells'];
+    const files = ['adventurer_kindred', 'kindreds', 'alignments', 'quests', 'names', 'classes', 'spells_refactored'];
     const promises = files.map(file => fetch(`data/${file}.json`).then(response => response.json()));
     const results = await Promise.all(promises);
     const data = {};
@@ -245,9 +242,6 @@ async function generateParty() {
 
         let fullName;
         while (true) {
-            const firstName = getRandomItem(gameData.names[kindredName.toLowerCase()].first_names);
-            const surname = getRandomItem(gameData.names[kindredName.toLowerCase()].surnames);
-            fullName = `${firstName} ${surname}`;
             fullName = generateName(kindredName, gameData.names);
             if (!usedNames.has(fullName)) {
                 usedNames.add(fullName);
@@ -258,22 +252,6 @@ async function generateParty() {
         const character = { name: fullName, kindred: kindredData.name, class: characterClass, level: level };
         const spells = assignSpells(character, gameData);
         const magicString = formatMagic(character, spells);
-        let magic = "";
-        if (characterClass === "Magician") {
-            let spells = [];
-            for(let i=0; i<level+1; i++) spells.push(gameData.spells.Arcane[Math.floor(Math.random() * gameData.spells.Arcane.length)]);
-            magic = `<strong>Arcane Spells:</strong> ${[...new Set(spells)].join(", ")}`;
-        } else if (characterClass === "Cleric" || characterClass === "Friar") {
-            let spells = [];
-            let spellCount = (characterClass === "Cleric" && level < 2) ? 0 : level;
-            for(let i=0; i<spellCount; i++) spells.push(gameData.spells.Holy[Math.floor(Math.random() * gameData.spells.Holy.length)]);
-            magic = spells.length > 0 ? `<strong>Holy Spells:</strong> ${[...new Set(spells)].join(", ")}` : "No holy spells prepared yet.";
-        } else if (characterClass === "Enchanter") {
-            let glamours = [];
-            for(let i=0; i<level; i++) glamours.push(gameData.spells.Glamours[Math.floor(Math.random() * gameData.spells.Glamours.length)]);
-            let rune = level >= 1 ? `<br><strong>Rune:</strong> ${gameData.spells.Runes[Math.floor(Math.random() * gameData.spells.Runes.length)]}` : "";
-            magic = `<strong>Glamours:</strong> ${[...new Set(glamours)].join(", ")}${rune}`;
-        }
 
         const magicItems = [];
         const categories = ["Armour", "Ring", "Weapon", "Potion", "Rod/Staff", "Scroll", "Wondrous"];
@@ -299,7 +277,6 @@ async function generateParty() {
 
     const mounts = Math.random() < 0.75 ? 'Riding horses (if encountered on road or in settlement)' : 'On foot';
     const quest = getRandomItem(gameData.quests[partyAlignment]);
-    const quest = gameData.quests[partyAlignment][Math.floor(Math.random() * gameData.quests[partyAlignment].length)];
 
     return { party, shared_treasure: sharedTreasure, mounts, quest };
 }
