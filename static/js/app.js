@@ -31,7 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
             wealthStrong.textContent = 'Shared Wealth:';
             summary.appendChild(wealthStrong);
             summary.appendChild(document.createTextNode(` ${data.shared_treasure.gp}gp, ${data.shared_treasure.sp}sp, ${data.shared_treasure.cp}cp, ${data.shared_treasure.gems} gems, ${data.shared_treasure.art_objects} art objects`));
-            outputDisplay.appendChild(summary);
+            // ⚡ Bolt: Use a DocumentFragment to batch DOM updates for performance.
+            // Appending elements one-by-one can cause multiple browser reflows.
+            // This collects all elements and appends them in a single operation.
+            const fragment = document.createDocumentFragment();
+            fragment.appendChild(summary);
 
             // Character Grid
             const grid = document.createElement('div');
@@ -82,7 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 grid.appendChild(card);
             });
-            outputDisplay.appendChild(grid);
+            fragment.appendChild(grid);
+            outputDisplay.appendChild(fragment);
 
         } catch (e) {
             // 🛡️ Sentinel: Prevent leaking stack traces to the user. Display a generic error message.
