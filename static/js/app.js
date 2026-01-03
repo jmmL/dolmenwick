@@ -2,10 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateButton = document.getElementById('generate-party');
     const outputDisplay = document.getElementById('output');
     const errorLog = document.getElementById('error-log');
+    const buttonText = generateButton.querySelector('span');
 
     generateButton.addEventListener('click', async () => {
         generateButton.disabled = true;
-        generateButton.textContent = "Generating...";
+        generateButton.classList.add('loading');
+        buttonText.textContent = "Generating...";
         try {
             // 🛡️ Sentinel: Use textContent to safely clear previous error messages and prevent XSS.
             errorLog.textContent = "";
@@ -90,7 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error(e); // Log the full error for developers
         } finally {
             generateButton.disabled = false;
-            generateButton.textContent = "Generate Random Party";
+            generateButton.classList.remove('loading');
+            buttonText.textContent = "Generate Random Party";
         }
     });
 });
