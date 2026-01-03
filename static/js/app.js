@@ -76,8 +76,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (c.magic) {
                     const magicBox = document.createElement('div');
                     magicBox.className = 'magic-box';
-                    // The HTML here is from trusted, hardcoded strings in generator.js, not from user-controlled JSON data.
-                    magicBox.innerHTML = c.magic;
+
+                    // 🛡️ Sentinel: Build magicBox content safely using DOM methods to prevent XSS.
+                    if (c.magic.special) {
+                        magicBox.textContent = c.magic.special; // Safely set text
+                    } else if (c.magic.lines && c.magic.lines.length > 0) {
+                        c.magic.lines.forEach((line, index) => {
+                            const lineElement = document.createElement('div');
+
+                            const label = document.createElement('strong');
+                            label.textContent = `${line.label}:`;
+                            lineElement.appendChild(label);
+
+                            lineElement.appendChild(document.createTextNode(` ${line.text}`));
+                            magicBox.appendChild(lineElement);
+                        });
+                    }
                     card.appendChild(magicBox);
                 }
                 grid.appendChild(card);

@@ -180,42 +180,50 @@ function getRuneFrequency(runeType, level, count) {
 }
 
 function formatMagic(character, spells) {
-    if (Object.keys(spells).length === 0) {
-        if (["Cleric", "Friar"].includes(character.class)) return "No prayers prepared yet.";
-        return "";
-    }
+    // 🛡️ Sentinel: Return a structured object instead of an HTML string to prevent XSS.
+    const magicData = {
+        lines: [],
+        special: ""
+    };
 
-    let html = '';
+    if (Object.keys(spells).length === 0) {
+        if (["Cleric", "Friar"].includes(character.class)) {
+            magicData.special = "No prayers prepared yet.";
+        }
+        return magicData;
+    }
 
     if (spells.glamours && spells.glamours.length > 0) {
-        html += `<strong>Glamours:</strong> ${spells.glamours.join(', ')}<br>`;
+        magicData.lines.push({ label: 'Glamours', text: spells.glamours.join(', ') });
     }
     if (spells.knack) {
-        html += `<strong>Knack:</strong> ${spells.knack}<br>`;
+        magicData.lines.push({ label: 'Knack', text: spells.knack });
     }
 
-    const formatRankedSpells = (spellData, typeName) => {
+    const formatRankedSpells = (spellData) => {
         let spellList = [];
         Object.keys(spellData).sort().forEach(rank => {
             spellData[rank].forEach(spell => {
                 spellList.push(`${spell} (${rank})`);
             });
         });
-        if (spellList.length > 0) {
-            return `<strong>${typeName}:</strong> ${spellList.join(', ')}<br>`;
-        }
-        return '';
+        return spellList.join(', ');
     };
 
     if (spells.arcane) {
-        html += formatRankedSpells(spells.arcane, "Arcane Spells");
+        const arcaneText = formatRankedSpells(spells.arcane);
+        if (arcaneText) {
+            magicData.lines.push({ label: 'Arcane Spells', text: arcaneText });
+        }
     }
     if (spells.holy) {
-        html += formatRankedSpells(spells.holy, "Holy Spells");
+        const holyText = formatRankedSpells(spells.holy);
+        if (holyText) {
+            magicData.lines.push({ label: 'Holy Spells', text: holyText });
+        }
     }
 
     if (spells.runes) {
-        let runeHtmlParts = [];
         ['lesser', 'greater', 'mighty'].forEach(type => {
             if (Object.keys(spells.runes[type]).length > 0) {
                 const typeName = type.charAt(0).toUpperCase() + type.slice(1);
@@ -225,22 +233,20 @@ function formatMagic(character, spells) {
                     const frequency = getRuneFrequency(type, character.level, count);
                     runesForType.push(`${runeName} (${frequency})`);
                 }
-                runeHtmlParts.push(`<strong>${typeName} Runes:</strong> ${runesForType.join(', ')}`);
+                magicData.lines.push({ label: `${typeName} Runes`, text: runesForType.join(', ') });
             }
         });
-        if (runeHtmlParts.length > 0) {
-            html += runeHtmlParts.join('<br>') + '<br>';
-        }
     }
 
     if (character.class === "Bard") {
         let targets = "Mortals";
         if (character.level >= 4) targets += ", Animals, Demi-fey";
         if (character.level >= 7) targets += ", Fairies, Monstrosities";
-        html += `<strong>Unique Ability:</strong> Counter Charm<br><strong>Enchantment:</strong> Can fascinate ${targets}`;
+        magicData.lines.push({ label: 'Unique Ability', text: 'Counter Charm' });
+        magicData.lines.push({ label: 'Enchantment', text: `Can fascinate ${targets}` });
     }
 
-    return html.trim();
+    return magicData;
 }
 
 
@@ -310,7 +316,7 @@ async function generateParty() {
 
         const character = { name: fullName, kindred: kindredData.name, class: characterClass, level: level };
         const spells = assignSpells(character, gameData);
-        const magicString = formatMagic(character, spells);
+        const magicData = formatMagic(character, spells);
 
         const magicItems = [];
         const categories = ["Armour", "Ring", "Weapon", "Potion", "Rod/Staff", "Scroll", "Wondrous"];
@@ -321,7 +327,7 @@ async function generateParty() {
         party.push({
             ...character,
             alignment: partyAlignment,
-            magic: magicString,
+            magic: magicData,
             magicItems: magicItems
         });
     }
