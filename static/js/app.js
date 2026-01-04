@@ -36,6 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Character Grid
             const grid = document.createElement('div');
             grid.className = 'character-grid';
+            // ⚡ Bolt: Use a DocumentFragment to batch DOM appends, which is more performant
+            // than appending each card to the DOM inside a loop. This reduces layout thrashing.
+            const fragment = document.createDocumentFragment();
             data.party.forEach(c => {
                 const card = document.createElement('div');
                 card.className = 'card';
@@ -80,8 +83,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     magicBox.innerHTML = c.magic;
                     card.appendChild(magicBox);
                 }
-                grid.appendChild(card);
+                fragment.appendChild(card);
             });
+            grid.appendChild(fragment);
             outputDisplay.appendChild(grid);
 
         } catch (e) {
