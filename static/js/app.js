@@ -73,11 +73,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 card.appendChild(stats);
 
-                if (c.magic) {
+                // 🛡️ Sentinel: Securely render magic data using DOM APIs instead of innerHTML.
+                if (c.magic && c.magic.length > 0) {
                     const magicBox = document.createElement('div');
                     magicBox.className = 'magic-box';
-                    // The HTML here is from trusted, hardcoded strings in generator.js, not from user-controlled JSON data.
-                    magicBox.innerHTML = c.magic;
+                    c.magic.forEach((item, index) => {
+                        if (item.label) {
+                            const strong = document.createElement('strong');
+                            strong.textContent = `${item.label}:`;
+                            magicBox.appendChild(strong);
+                            magicBox.appendChild(document.createTextNode(` ${item.text}`));
+                        } else {
+                            magicBox.appendChild(document.createTextNode(item.text));
+                        }
+                        if (index < c.magic.length - 1) {
+                            magicBox.appendChild(document.createElement('br'));
+                        }
+                    });
                     card.appendChild(magicBox);
                 }
                 grid.appendChild(card);
