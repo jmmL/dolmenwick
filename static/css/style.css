@@ -12,3 +12,29 @@ button:hover { background-color: #e05a35; }
 .magic-box { background: #232325; padding: 12px; margin-top: auto; border-radius: 4px; border-left: 3px solid #ffcc00; font-size: 0.9em; }
 .placeholder { color: #888; font-style: italic; }
 #error-log { color: #ff4444; font-family: monospace; margin-top: 20px; font-size: 0.8em; }
+
+/* Palette's Spinner */
+button.loading {
+    position: relative;
+    color: transparent; /* Hide button text */
+    cursor: wait;
+}
+
+button.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
