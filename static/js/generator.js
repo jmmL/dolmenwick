@@ -6,7 +6,7 @@ async function getGameData() {
         return gameDataCache;
     }
 
-    const files = ['adventurer_kindred', 'kindreds', 'alignments', 'quests', 'names', 'classes', 'spells_refactored'];
+    const files = ['adventurer_kindred', 'kindreds', 'alignments', 'quests', 'names', 'classes', 'spells_refactored', 'houses'];
     const promises = files.map(file => fetch(`data/${file}.json`).then(response => response.json()));
     const results = await Promise.all(promises);
     const data = {};
@@ -89,7 +89,9 @@ function assignSpells(character, gameData) {
             let allClassSpells = [];
             for (const rank in levelInfo) {
                 const count = levelInfo[rank];
-                const selectedForRank = getUniqueRandomItems(count, allSpells[spellType][rank], allClassSpells);
+                const sourceArray = allSpells[spellType][rank];
+                const selectedForRank = getUniqueRandomItems(count, sourceArray, allClassSpells);
+
                 // We only want the *new* spells for this rank
                 spells[spellType][rank] = selectedForRank.slice(allClassSpells.length);
                 allClassSpells.push(...spells[spellType][rank]);
@@ -284,13 +286,61 @@ function generateName(kindredName, namesData) {
     }
 }
 
-async function generateParty() {
+function determineAlignment(charClass, gameData) {
+    const housesData = gameData.houses;
+    let alignment, houseName;
+
+    if (['Cleric', 'Friar'].includes(charClass)) {
+        alignment = Math.random() < 0.5 ? 'Lawful' : 'Neutral';
+    } else if (charClass === 'Knight') {
+        const houseNames = Object.keys(housesData);
+        houseName = getRandomItem(houseNames);
+        alignment = housesData[houseName].alignment;
+    } else {
+        const roll = Math.random();
+        if (roll < 1/3) alignment = 'Lawful';
+        else if (roll < 2/3) alignment = 'Neutral';
+        else alignment = 'Chaotic';
+    }
+
+    return { alignment, houseName };
+}
+
+function calculatePartyAlignment(party) {
+    const alignmentCounts = { Lawful: 0, Neutral: 0, Chaotic: 0 };
+    party.forEach(c => {
+        if (alignmentCounts[c.alignment] !== undefined) {
+            alignmentCounts[c.alignment]++;
+        }
+    });
+
+    let maxCount = -1;
+    let candidates = [];
+
+    for (const align in alignmentCounts) {
+        if (alignmentCounts[align] > maxCount) {
+            maxCount = alignmentCounts[align];
+            candidates = [align];
+        } else if (alignmentCounts[align] === maxCount) {
+            candidates.push(align);
+        }
+    }
+
+    return getRandomItem(candidates);
+}
+
+async function generateParty(alignmentMode = 'party') {
     const gameData = await getGameData();
     const partySize = roll('1d4') + 4;
     const party = [];
     const usedNames = new Set();
-    const partyAlignment = lookupResult(roll('1d6'), gameData.alignments);
     const isHigherLevel = roll('1d6') === 6;
+
+    // Determine initial party alignment (only used if in 'party' mode)
+    let globalPartyAlignment = null;
+    if (alignmentMode === 'party') {
+        globalPartyAlignment = lookupResult(roll('1d6'), gameData.alignments);
+    }
 
     for (let i = 0; i < partySize; i++) {
         const kindredName = lookupResult(roll('1d12'), gameData.adventurer_kindred);
@@ -317,13 +367,76 @@ async function generateParty() {
             if (roll('1d100') <= (level * 5)) magicItems.push(cat);
         });
 
+        // Alignment Logic
+        let charAlignment, houseName;
+
+        if (alignmentMode === 'party') {
+            charAlignment = globalPartyAlignment;
+            // Handle Knight House selection matching party alignment
+            if (characterClass === 'Knight') {
+                const compatibleHouses = Object.keys(gameData.houses).filter(
+                    h => gameData.houses[h].alignment === globalPartyAlignment
+                );
+                // Fallback if somehow no house matches (should not happen with standard data)
+                if (compatibleHouses.length > 0) {
+                    houseName = getRandomItem(compatibleHouses);
+                } else {
+                    // Fallback to random house
+                    houseName = getRandomItem(Object.keys(gameData.houses));
+                }
+            }
+        } else {
+            // Individual Mode
+            const result = determineAlignment(characterClass, gameData);
+            charAlignment = result.alignment;
+            houseName = result.houseName;
+        }
+
+        if (characterClass === 'Knight' && houseName) {
+            character.name += ` of House ${houseName}`;
+        }
+
         party.push({
             ...character,
-            alignment: partyAlignment,
+            alignment: charAlignment,
             magic: magicData,
             magicItems: magicItems
         });
     }
+
+    // Determine Final Party Alignment
+    let finalPartyAlignment;
+    if (alignmentMode === 'party') {
+        finalPartyAlignment = globalPartyAlignment;
+    } else {
+        finalPartyAlignment = calculatePartyAlignment(party);
+    }
+
+    // Select Leader
+    let leaderCandidates = party.filter(c => c.alignment === finalPartyAlignment);
+
+    // Fallback: If no candidate matches (very unlikely in individual mode due to calculation, possible if manual overrides existed), pick random.
+    // In calculated mode, at least one person has the mode alignment.
+    if (leaderCandidates.length === 0) {
+        leaderCandidates = [...party]; // Fallback to everyone
+    }
+
+    // Logic: Leader should not be chosen from lowest level unless that's the only option
+    const minPartyLevel = Math.min(...party.map(c => c.level));
+    const higherLevelCandidates = leaderCandidates.filter(c => c.level > minPartyLevel);
+
+    let finalCandidates = higherLevelCandidates.length > 0 ? higherLevelCandidates : leaderCandidates;
+
+    const selectedLeader = getRandomItem(finalCandidates);
+    let leaderIndex = party.indexOf(selectedLeader);
+
+    const leader = party[leaderIndex];
+    leader.isLeader = true;
+
+    // Move leader to front
+    party.splice(leaderIndex, 1);
+    party.unshift(leader);
+
 
     const sharedTreasure = {
         cp: roll('1d100'),
@@ -334,7 +447,7 @@ async function generateParty() {
     };
 
     const mounts = Math.random() < 0.75 ? 'Riding horses (if encountered on road or in settlement)' : 'On foot';
-    const quest = getRandomItem(gameData.quests[partyAlignment]);
+    const quest = getRandomItem(gameData.quests[finalPartyAlignment]);
 
     return { party, shared_treasure: sharedTreasure, mounts, quest };
 }
