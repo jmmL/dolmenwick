@@ -413,16 +413,22 @@ async function generateParty(alignmentMode = 'party') {
     }
 
     // Select Leader
-    const leaderCandidates = party.filter(c => c.alignment === finalPartyAlignment);
+    let leaderCandidates = party.filter(c => c.alignment === finalPartyAlignment);
+
     // Fallback: If no candidate matches (very unlikely in individual mode due to calculation, possible if manual overrides existed), pick random.
     // In calculated mode, at least one person has the mode alignment.
-    let leaderIndex = -1;
-    if (leaderCandidates.length > 0) {
-        const leader = getRandomItem(leaderCandidates);
-        leaderIndex = party.indexOf(leader);
-    } else {
-        leaderIndex = Math.floor(Math.random() * party.length);
+    if (leaderCandidates.length === 0) {
+        leaderCandidates = [...party]; // Fallback to everyone
     }
+
+    // Logic: Leader should not be chosen from lowest level unless that's the only option
+    const minPartyLevel = Math.min(...party.map(c => c.level));
+    const higherLevelCandidates = leaderCandidates.filter(c => c.level > minPartyLevel);
+
+    let finalCandidates = higherLevelCandidates.length > 0 ? higherLevelCandidates : leaderCandidates;
+
+    const selectedLeader = getRandomItem(finalCandidates);
+    let leaderIndex = party.indexOf(selectedLeader);
 
     const leader = party[leaderIndex];
     leader.isLeader = true;
