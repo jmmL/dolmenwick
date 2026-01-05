@@ -9,6 +9,19 @@
 <body>
     <div class="container">
         <h1>Dolmenwood NPC Party Generator</h1>
+        <div class="controls">
+            <fieldset>
+                <legend>Alignment Mode</legend>
+                <label>
+                    <input type="radio" name="alignment-mode" value="party" checked>
+                    Party (Default)
+                </label>
+                <label>
+                    <input type="radio" name="alignment-mode" value="individual">
+                    Individual
+                </label>
+            </fieldset>
+        </div>
         <button id="generate-party">Generate Random Party</button>
         <div id="output"></div>
         <div id="error-log"></div>

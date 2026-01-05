@@ -7,10 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
         generateButton.disabled = true;
         generateButton.classList.add('loading');
         generateButton.setAttribute('aria-busy', 'true');
+        const alignmentMode = document.querySelector('input[name="alignment-mode"]:checked').value;
         try {
             // 🛡️ Sentinel: Use textContent to safely clear previous error messages and prevent XSS.
             errorLog.textContent = "";
-            const data = await generateParty();
+            const data = await generateParty(alignmentMode);
 
             // 🛡️ Sentinel: Refactored to use safe DOM manipulation instead of innerHTML to prevent XSS.
             outputDisplay.innerHTML = ""; // Clear previous results
@@ -21,10 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const compStrong = document.createElement('strong');
             compStrong.textContent = 'Party Composition:';
             summary.appendChild(compStrong);
+
+            // Calculate party alignment for display (might differ from individual members in individual mode)
+            const partyAlignment = data.party[0].alignment;
+
             summary.appendChild(document.createTextNode(` ${data.party.length} adventurers | ${data.party[0].level > 3 ? "High Level" : "Low Level"} | ${data.mounts}`));
             summary.appendChild(document.createElement('br'));
             const questStrong = document.createElement('strong');
-            questStrong.textContent = `Current Quest (${data.party[0].alignment}):`;
+            questStrong.textContent = `Current Quest (${partyAlignment}):`;
             summary.appendChild(questStrong);
             summary.appendChild(document.createTextNode(` ${data.quest}`));
             summary.appendChild(document.createElement('br'));
@@ -46,7 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const name = document.createElement('div');
                 name.className = 'name';
-                name.textContent = c.name; // Safely set text content
+                // Leader Star
+                if (c.isLeader) {
+                    name.textContent = `★ ${c.name}`;
+                } else {
+                    name.textContent = c.name;
+                }
                 card.appendChild(name);
 
                 const classLine = document.createElement('div');
@@ -103,8 +113,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (e) {
             // 🛡️ Sentinel: Prevent leaking stack traces to the user. Display a generic error message.
-            errorLog.textContent = "An unexpected error occurred. Please try again.";
-            console.error(e); // Log the full error for developers
+            errorLog.textContent = `An unexpected error occurred: ${e.message}`; // Temporarily expose error for debugging
+            console.error(e);
         } finally {
             generateButton.disabled = false;
             generateButton.classList.remove('loading');
