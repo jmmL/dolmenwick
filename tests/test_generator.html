@@ -40,7 +40,7 @@
 
         async function runTests() {
             try {
-                gameData = await getGameData('../');
+                gameData = await getGameData();
             } catch (e) {
                 resultsContainer.innerHTML = `<div class="fail">FATAL: Could not load game data. ${e.message}</div>`;
                 return;
