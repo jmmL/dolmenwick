@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (e) {
             // 🛡️ Sentinel: Prevent leaking stack traces to the user. Display a generic error message.
-            errorLog.textContent = `An unexpected error occurred: ${e.message}`; // Temporarily expose error for debugging
+            errorLog.textContent = "An unexpected error occurred. Please try again.";
             console.error(e);
         } finally {
             generateButton.disabled = false;
