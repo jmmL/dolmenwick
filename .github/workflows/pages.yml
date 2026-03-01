@@ -36,6 +36,10 @@ jobs:
         working-directory: .quartz
         run: npm ci
 
+      - name: Install Quartz Playwright browsers
+        working-directory: .quartz
+        run: npx playwright install --with-deps chromium webkit
+
       - name: Install referee tool dependencies
         working-directory: .referee-tools/party-generator
         run: npm ci
@@ -59,6 +63,10 @@ jobs:
       - name: Copy referee tools
         working-directory: .quartz
         run: node scripts/copy-referee-tools.mjs
+
+      - name: Run Quartz E2E tests
+        working-directory: .quartz
+        run: npx playwright test --project=chromium --project=webkit-iphone
 
       - name: Validate output
         working-directory: .quartz

@@ -28,6 +28,8 @@ async function collectPaths(dir, prefix = "") {
 
 async function main() {
   await assertExists("index.html")
+  await assertExists("hearth.html")
+  await assertExists(path.join("hearth", "index.html"))
   await assertExists(path.join("referee-tools", "index.html"))
   await assertExists(path.join("referee-tools", "party-generator", "index.html"))
 

@@ -240,22 +240,33 @@ export function renderPage(
   } = components
   const Header = HeaderConstructor()
   const Body = BodyConstructor()
+  const pageClasses = ["page"]
 
-  const LeftComponent = (
-    <div class="left sidebar">
-      {left.map((BodyComponent) => (
-        <BodyComponent {...componentData} />
-      ))}
-    </div>
-  )
+  if (left.length === 0) {
+    pageClasses.push("no-left")
+  }
 
-  const RightComponent = (
-    <div class="right sidebar">
-      {right.map((BodyComponent) => (
-        <BodyComponent {...componentData} />
-      ))}
-    </div>
-  )
+  if (right.length === 0) {
+    pageClasses.push("no-right")
+  }
+
+  const LeftComponent =
+    left.length > 0 ? (
+      <div class="left sidebar">
+        {left.map((BodyComponent) => (
+          <BodyComponent {...componentData} />
+        ))}
+      </div>
+    ) : null
+
+  const RightComponent =
+    right.length > 0 ? (
+      <div class="right sidebar">
+        {right.map((BodyComponent) => (
+          <BodyComponent {...componentData} />
+        ))}
+      </div>
+    ) : null
 
   const lang = componentData.fileData.frontmatter?.lang ?? cfg.locale?.split("-")[0] ?? "en"
   const direction = i18n(cfg.locale).direction ?? "ltr"
@@ -263,7 +274,7 @@ export function renderPage(
     <html lang={lang} dir={direction}>
       <Head {...componentData} />
       <body data-slug={slug}>
-        <div id="quartz-root" class="page">
+        <div id="quartz-root" class={pageClasses.join(" ")}>
           <Body {...componentData}>
             {LeftComponent}
             <div class="center">

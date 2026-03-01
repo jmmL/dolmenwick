@@ -7,6 +7,7 @@ zReferee only/
 .quartz/public/
 .quartz/node_modules/
 .quartz/.quartz-cache/
+.quartz/output/
 .quartz/tsconfig.tsbuildinfo
 
 .referee-tools/party-generator/node_modules/

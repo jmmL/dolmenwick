@@ -1,4 +1,4 @@
-import { FullSlug, isRelativeURL, resolveRelative, simplifySlug } from "../../util/path"
+import { FullSlug, isRelativeURL, joinSegments, resolveRelative, simplifySlug } from "../../util/path"
 import { QuartzEmitterPlugin } from "../types"
 import { write } from "./helpers"
 import { BuildCtx } from "../../util/ctx"
@@ -15,24 +15,35 @@ async function* processFile(ctx: BuildCtx, file: VFile) {
         : aliasTarget
     ) as FullSlug
 
-    const redirUrl = resolveRelative(aliasTargetSlug, ogSlug)
-    yield write({
-      ctx,
-      content: `
-        <!DOCTYPE html>
-        <html lang="en-us">
-        <head>
-        <title>${ogSlug}</title>
-        <link rel="canonical" href="${redirUrl}">
-        <meta name="robots" content="noindex">
-        <meta charset="utf-8">
-        <meta http-equiv="refresh" content="0; url=${redirUrl}">
-        </head>
-        </html>
-        `,
-      slug: aliasTargetSlug,
-      ext: ".html",
-    })
+    const redirectSlugs: FullSlug[] =
+      aliasTargetSlug === "index" || aliasTargetSlug.endsWith("/index")
+        ? [aliasTargetSlug]
+        : [aliasTargetSlug, joinSegments(aliasTargetSlug, "index") as FullSlug]
+
+    for (const redirectSlug of redirectSlugs) {
+      const redirectUrl = resolveRelative(redirectSlug, ogSlug)
+      yield write({
+        ctx,
+        content: `
+          <!DOCTYPE html>
+          <html lang="en-us">
+          <head>
+          <title>${ogSlug}</title>
+          <link rel="canonical" href="${redirectUrl}">
+          <meta name="robots" content="noindex">
+          <meta charset="utf-8">
+          <meta http-equiv="refresh" content="0; url=${redirectUrl}">
+          <script>location.replace(${JSON.stringify(redirectUrl)})</script>
+          </head>
+          <body>
+          <a href="${redirectUrl}">Continue</a>
+          </body>
+          </html>
+          `,
+        slug: redirectSlug,
+        ext: ".html",
+      })
+    }
   }
 }
 
