@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Dolmenwick Referee Tools</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #181516;
+      --panel: #231f21;
+      --text: #ece4d8;
+      --muted: #b7a891;
+      --accent: #b55f32;
+      --accent-strong: #de7b46;
+      --border: #4d3f3e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, serif;
+      background:
+        radial-gradient(circle at top, rgba(181, 95, 50, 0.12), transparent 30%),
+        linear-gradient(180deg, #191617 0%, #131112 100%);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    main {
+      width: min(720px, 100%);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      color: #f2c76f;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0 0 24px;
+    }
+
+    a {
+      display: inline-block;
+      text-decoration: none;
+      color: white;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      padding: 14px 18px;
+      border-radius: 999px;
+      font-weight: bold;
+    }
+
+    a:hover {
+      filter: brightness(1.08);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Referee Tools</h1>
+    <p>This area is intentionally separate from the player-facing notes. The party generator is preserved here as a standalone static tool.</p>
+    <a href="./party-generator/">Open Party Generator</a>
+  </main>
+</body>
+</html>

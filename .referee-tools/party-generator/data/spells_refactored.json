@@ -1,0 +1,190 @@
+{
+  "arcane": {
+    "rank1": [
+      "Crystal Resonance",
+      "Decipher",
+      "Fairy Servant",
+      "Firelight",
+      "Floating Disc",
+      "Glyph of Sealing",
+      "Ignite / Extinguish",
+      "Ingratiate",
+      "Ioun Shard",
+      "Shield of Force",
+      "Vapours of Dream",
+      "Ventriloquism"
+    ],
+    "rank2": [
+      "Arcane Cypher",
+      "Dweomerlight",
+      "Flaming Spirit",
+      "Glyph of Locking",
+      "Invisibility",
+      "Knock",
+      "Levitate",
+      "Mind Crystal",
+      "Mirror Image",
+      "Perceive the Invisible",
+      "Phantasm",
+      "Web"
+    ],
+    "rank3": [
+      "Circle of Invisibility",
+      "Crystal Vision",
+      "Dark Sight",
+      "Dispel Magic",
+      "Fireball",
+      "Fly",
+      "Haste",
+      "Lightning Bolt",
+      "Missile Ward",
+      "Paralysation",
+      "Serpent Glyph",
+      "Water Breathing"
+    ],
+    "rank4": [
+      "Acid Globe",
+      "Arcane Eye",
+      "Confusion",
+      "Dimension Door",
+      "Dominate",
+      "Hallucinatory Terrain",
+      "Hex Weaving",
+      "Plant Growth",
+      "Polymorph",
+      "Wall of Fire",
+      "Wall of Ice",
+      "Woodland Veil"
+    ],
+    "rank5": [
+      "Air Sphere",
+      "Animate Dead",
+      "Cloudkill",
+      "Conjure Elemental",
+      "Fabricate",
+      "Feeblemind",
+      "Mire",
+      "Passwall",
+      "Sending",
+      "Telekinesis",
+      "Teleport",
+      "Wall of Stone"
+    ],
+    "rank6": [
+      "Anti-Magic Ward",
+      "Control Weather",
+      "Disintegrate",
+      "Dweomerfire",
+      "Geas",
+      "Invisible Stalker",
+      "Move Terrain",
+      "Oracle",
+      "Petrification",
+      "Project Image",
+      "Wave of Force",
+      "Word of Doom"
+    ]
+  },
+  "holy": {
+    "rank1": [
+      "Detect Evil",
+      "Detect Magic",
+      "Frost Ward",
+      "Lesser Healing",
+      "Light",
+      "Mantle of Protection",
+      "Purify Food and Drink",
+      "Rally"
+    ],
+    "rank2": [
+      "Bless",
+      "Charm Serpents",
+      "Find Traps",
+      "Flame Ward",
+      "Hold Person",
+      "Reveal Alignment",
+      "Silence",
+      "Speak With Animals"
+    ],
+    "rank3": [
+      "Animal Growth",
+      "Bless Weapon",
+      "Cure Affliction",
+      "Holy Light",
+      "Locate Object",
+      "Remove Curse"
+    ],
+    "rank4": [
+      "Circle of Protection",
+      "Create Water",
+      "Greater Healing",
+      "Remove Poison",
+      "Speak With Plants",
+      "Serpent Transformation"
+    ],
+    "rank5": [
+      "Communion",
+      "Create Food",
+      "Holy Fire",
+      "Holy Quest",
+      "Insect Plague",
+      "Raise Dead"
+    ]
+  },
+  "glamours": [
+    "Awe",
+    "Beguilement",
+    "Breath of the Wind",
+    "Cloak of Darkness",
+    "Conjure Treats",
+    "Dancing Flame",
+    "Disguise Object",
+    "Fairy Dust",
+    "Flame Charm",
+    "Fool’s Gold",
+    "Forgetting",
+    "Masquerade",
+    "Mirth and Malice",
+    "Moon Sight",
+    "Seeming",
+    "Silver Tongue",
+    "Subtle Sight",
+    "Through the Keyhole",
+    "Vanishing",
+    "Walk in Shadows"
+  ],
+  "runes": {
+    "lesser": [
+      "Deathly Blossom",
+      "Fog Cloud",
+      "Gust of Wind",
+      "Proof Against Deadly Harm",
+      "Rune of Vanishing",
+      "Sway the Mortal Mind"
+    ],
+    "greater": [
+      "Arcane Unbinding",
+      "Fairy Gold",
+      "Fairy Steed",
+      "Ice Storm",
+      "Rune of Invisibility",
+      "Sway the Mind"
+    ],
+    "mighty": [
+      "Dream Ship",
+      "Eternal Slumber",
+      "Rune of Death",
+      "Rune of Wishing",
+      "Summon Wild Hunt",
+      "Unravel Death"
+    ]
+  },
+  "knacks": [
+    "Bird Friend",
+    "Lock Singer",
+    "Root Friend",
+    "Thread Whistling",
+    "Wood Kenning",
+    "Yeast Master"
+  ]
+}

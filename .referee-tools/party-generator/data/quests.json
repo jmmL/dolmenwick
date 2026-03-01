@@ -1,0 +1,11 @@
+{
+    "Lawful": [
+        "Locate a lost shrine and report to the Bishop of Brackenwold."
+    ],
+    "Neutral": [
+        "Search for magical herbs/fungi in Mulchgrove."
+    ],
+    "Chaotic": [
+        "Rob any weaker looking groups they encounter."
+    ]
+}

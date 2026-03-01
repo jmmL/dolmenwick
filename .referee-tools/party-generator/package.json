@@ -1,0 +1,10 @@
+{
+  "name": "dolmenwick-party-generator",
+  "private": true,
+  "scripts": {
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.57.0"
+  }
+}

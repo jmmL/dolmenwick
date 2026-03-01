@@ -1,4 +1,14 @@
-*.log
-node_modules/
-package-lock.json
-test-results/
+.DS_Store
+.obsidian/
+.git.local-empty-backup/
+zReferee only/
+
+.quartz/content/
+.quartz/public/
+.quartz/node_modules/
+.quartz/.quartz-cache/
+.quartz/tsconfig.tsbuildinfo
+
+.referee-tools/party-generator/node_modules/
+.referee-tools/party-generator/playwright-report/
+.referee-tools/party-generator/test-results/
