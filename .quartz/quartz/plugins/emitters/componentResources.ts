@@ -1,3 +1,4 @@
+import { createHash } from "crypto"
 import { FullSlug, joinSegments } from "../../util/path"
 import { QuartzEmitterPlugin } from "../types"
 
@@ -18,6 +19,7 @@ import {
 import { Features, transform } from "lightningcss"
 import { transform as transpile } from "esbuild"
 import { write } from "./helpers"
+import { SharedPageAssets } from "../../util/resources"
 
 type ComponentResources = {
   css: string[]
@@ -74,6 +76,15 @@ async function joinScripts(scripts: string[]): Promise<string> {
   })
 
   return res.code
+}
+
+function getHashedFileName(baseName: string, content: string, ext: `.${string}`): string {
+  const hash = createHash("sha256").update(content).digest("hex").slice(0, 12)
+  return `${baseName}.${hash}${ext}`
+}
+
+function stripExtension(fileName: string, ext: string): FullSlug {
+  return fileName.slice(0, -ext.length) as FullSlug
 }
 
 function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentResources) {
@@ -265,109 +276,132 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
   }
 }
 
+export async function buildSharedPageAssets(ctx: BuildCtx): Promise<SharedPageAssets> {
+  const cfg = ctx.cfg.configuration
+  const componentResources = getComponentResources(ctx)
+  let googleFontsStyleSheet = ""
+  const fontFiles: SharedPageAssets["fontFiles"] = []
+
+  if (cfg.theme.fontOrigin === "local") {
+    // let the user do it themselves in css
+  } else if (cfg.theme.fontOrigin === "googleFonts" && !cfg.theme.cdnCaching) {
+    const theme = ctx.cfg.configuration.theme
+    const response = await fetch(googleFontHref(theme))
+    googleFontsStyleSheet = await response.text()
+
+    if (theme.typography.title) {
+      const title = ctx.cfg.configuration.pageTitle
+      const titleResponse = await fetch(googleFontSubsetHref(theme, title))
+      googleFontsStyleSheet += `\n${await titleResponse.text()}`
+    }
+
+    if (!cfg.baseUrl) {
+      throw new Error("baseUrl must be defined when using Google Fonts without cfg.theme.cdnCaching")
+    }
+
+    const { processedStylesheet, fontFiles: googleFontFiles } = await processGoogleFonts(
+      googleFontsStyleSheet,
+      cfg.baseUrl,
+    )
+    googleFontsStyleSheet = processedStylesheet
+
+    for (const fontFile of googleFontFiles) {
+      const res = await fetch(fontFile.url)
+      if (!res.ok) {
+        throw new Error(`Failed to fetch font ${fontFile.filename}`)
+      }
+
+      const buf = await res.arrayBuffer()
+      fontFiles.push({
+        slug: joinSegments("static", "fonts", fontFile.filename) as FullSlug,
+        ext: `.${fontFile.extension}`,
+        content: Buffer.from(buf),
+      })
+    }
+  }
+
+  // This must run after component resources so the nav event is emitted last.
+  addGlobalPageResources(ctx, componentResources)
+
+  const stylesheet = joinStyles(
+    ctx.cfg.configuration.theme,
+    googleFontsStyleSheet,
+    ...componentResources.css,
+    styles,
+  )
+
+  const cssContent = transform({
+    filename: "index.css",
+    code: Buffer.from(stylesheet),
+    minify: true,
+    targets: {
+      safari: (15 << 16) | (6 << 8), // 15.6
+      ios_saf: (15 << 16) | (6 << 8), // 15.6
+      edge: 115 << 16,
+      firefox: 102 << 16,
+      chrome: 109 << 16,
+    },
+    include: Features.MediaQueries,
+  }).code.toString()
+
+  const [prescriptContent, postscriptContent] = await Promise.all([
+    joinScripts(componentResources.beforeDOMLoaded),
+    joinScripts(componentResources.afterDOMLoaded),
+  ])
+
+  return {
+    cssFile: getHashedFileName("index", cssContent, ".css"),
+    cssContent,
+    prescriptFile: getHashedFileName("prescript", prescriptContent, ".js"),
+    prescriptContent,
+    postscriptFile: getHashedFileName("postscript", postscriptContent, ".js"),
+    postscriptContent,
+    fontFiles,
+  }
+}
+
 // This emitter should not update the `resources` parameter. If it does, partial
 // rebuilds may not work as expected.
 export const ComponentResources: QuartzEmitterPlugin = () => {
+  async function* emitSharedAssets(ctx: BuildCtx, sharedPageAssets: SharedPageAssets) {
+    for (const fontFile of sharedPageAssets.fontFiles) {
+      yield write({
+        ctx,
+        slug: fontFile.slug as FullSlug,
+        ext: fontFile.ext,
+        content: fontFile.content,
+      })
+    }
+
+    yield write({
+      ctx,
+      slug: stripExtension(sharedPageAssets.cssFile, ".css"),
+      ext: ".css",
+      content: sharedPageAssets.cssContent,
+    })
+
+    yield write({
+      ctx,
+      slug: stripExtension(sharedPageAssets.prescriptFile, ".js"),
+      ext: ".js",
+      content: sharedPageAssets.prescriptContent,
+    })
+
+    yield write({
+      ctx,
+      slug: stripExtension(sharedPageAssets.postscriptFile, ".js"),
+      ext: ".js",
+      content: sharedPageAssets.postscriptContent,
+    })
+  }
+
   return {
     name: "ComponentResources",
-    async *emit(ctx, _content, _resources) {
-      const cfg = ctx.cfg.configuration
-      // component specific scripts and styles
-      const componentResources = getComponentResources(ctx)
-      let googleFontsStyleSheet = ""
-      if (cfg.theme.fontOrigin === "local") {
-        // let the user do it themselves in css
-      } else if (cfg.theme.fontOrigin === "googleFonts" && !cfg.theme.cdnCaching) {
-        // when cdnCaching is true, we link to google fonts in Head.tsx
-        const theme = ctx.cfg.configuration.theme
-        const response = await fetch(googleFontHref(theme))
-        googleFontsStyleSheet = await response.text()
-
-        if (theme.typography.title) {
-          const title = ctx.cfg.configuration.pageTitle
-          const response = await fetch(googleFontSubsetHref(theme, title))
-          googleFontsStyleSheet += `\n${await response.text()}`
-        }
-
-        if (!cfg.baseUrl) {
-          throw new Error(
-            "baseUrl must be defined when using Google Fonts without cfg.theme.cdnCaching",
-          )
-        }
-
-        const { processedStylesheet, fontFiles } = await processGoogleFonts(
-          googleFontsStyleSheet,
-          cfg.baseUrl,
-        )
-        googleFontsStyleSheet = processedStylesheet
-
-        // Download and save font files
-        for (const fontFile of fontFiles) {
-          const res = await fetch(fontFile.url)
-          if (!res.ok) {
-            throw new Error(`Failed to fetch font ${fontFile.filename}`)
-          }
-
-          const buf = await res.arrayBuffer()
-          yield write({
-            ctx,
-            slug: joinSegments("static", "fonts", fontFile.filename) as FullSlug,
-            ext: `.${fontFile.extension}`,
-            content: Buffer.from(buf),
-          })
-        }
-      }
-
-      // important that this goes *after* component scripts
-      // as the "nav" event gets triggered here and we should make sure
-      // that everyone else had the chance to register a listener for it
-      addGlobalPageResources(ctx, componentResources)
-
-      const stylesheet = joinStyles(
-        ctx.cfg.configuration.theme,
-        googleFontsStyleSheet,
-        ...componentResources.css,
-        styles,
-      )
-
-      const [prescript, postscript] = await Promise.all([
-        joinScripts(componentResources.beforeDOMLoaded),
-        joinScripts(componentResources.afterDOMLoaded),
-      ])
-
-      yield write({
-        ctx,
-        slug: "index" as FullSlug,
-        ext: ".css",
-        content: transform({
-          filename: "index.css",
-          code: Buffer.from(stylesheet),
-          minify: true,
-          targets: {
-            safari: (15 << 16) | (6 << 8), // 15.6
-            ios_saf: (15 << 16) | (6 << 8), // 15.6
-            edge: 115 << 16,
-            firefox: 102 << 16,
-            chrome: 109 << 16,
-          },
-          include: Features.MediaQueries,
-        }).code.toString(),
-      })
-
-      yield write({
-        ctx,
-        slug: "prescript" as FullSlug,
-        ext: ".js",
-        content: prescript,
-      })
-
-      yield write({
-        ctx,
-        slug: "postscript" as FullSlug,
-        ext: ".js",
-        content: postscript,
-      })
+    async *emit(ctx, _content, resources) {
+      yield* emitSharedAssets(ctx, resources.sharedPageAssets)
     },
-    async *partialEmit() {},
+    async *partialEmit(ctx, _content, resources) {
+      yield* emitSharedAssets(ctx, resources.sharedPageAssets)
+    },
   }
 }

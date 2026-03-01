@@ -14,7 +14,7 @@ export async function emitContent(ctx: BuildCtx, content: ProcessedContent[]) {
   log.start(`Emitting files`)
 
   let emittedFiles = 0
-  const staticResources = getStaticResourcesFromPlugins(ctx)
+  const staticResources = await getStaticResourcesFromPlugins(ctx)
   await Promise.all(
     cfg.plugins.emitters.map(async (emitter) => {
       try {

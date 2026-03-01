@@ -29,17 +29,18 @@ export function pageResources(
 ): StaticResources {
   const contentIndexPath = joinSegments(baseDir, "static/contentIndex.json")
   const contentIndexScript = `const fetchData = fetch("${contentIndexPath}").then(data => data.json())`
+  const { sharedPageAssets } = staticResources
 
   const resources: StaticResources = {
     css: [
       {
-        content: joinSegments(baseDir, "index.css"),
+        content: joinSegments(baseDir, sharedPageAssets.cssFile),
       },
       ...staticResources.css,
     ],
     js: [
       {
-        src: joinSegments(baseDir, "prescript.js"),
+        src: joinSegments(baseDir, sharedPageAssets.prescriptFile),
         loadTime: "beforeDOMReady",
         contentType: "external",
       },
@@ -52,10 +53,11 @@ export function pageResources(
       ...staticResources.js,
     ],
     additionalHead: staticResources.additionalHead,
+    sharedPageAssets,
   }
 
   resources.js.push({
-    src: joinSegments(baseDir, "postscript.js"),
+    src: joinSegments(baseDir, sharedPageAssets.postscriptFile),
     loadTime: "afterDOMReady",
     moduleType: "module",
     contentType: "external",

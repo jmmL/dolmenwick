@@ -11,6 +11,18 @@ const testDir = path.dirname(fileURLToPath(import.meta.url))
 export const quartzDir = path.resolve(testDir, "../..")
 export const nodePath = "/opt/homebrew/opt/node@22/bin/node"
 
+type FixtureFiles = string | Record<string, string>
+
+function normalizeFixtureFiles(files: FixtureFiles): Record<string, string> {
+  return typeof files === "string" ? { "index.md": files } : files
+}
+
+function extractAssetPath(html: string, pattern: RegExp, label: string): string {
+  const match = html.match(pattern)
+  assert.ok(match?.[1], `Expected HTML to include a ${label} asset reference`)
+  return match[1].replace(/^\.\//, "")
+}
+
 export async function withTempDir<T>(prefix: string, fn: (dir: string) => Promise<T>): Promise<T> {
   const dir = await mkdtemp(path.join(tmpdir(), prefix))
   try {
@@ -21,14 +33,23 @@ export async function withTempDir<T>(prefix: string, fn: (dir: string) => Promis
 }
 
 export async function withBuiltFixtureSite<T>(
-  markdown: string,
-  fn: (site: { outputDir: string; indexHtml: string; indexCss: string }) => Promise<T>,
+  files: FixtureFiles,
+  fn: (site: {
+    outputDir: string
+    indexHtml: string
+    indexCss: string
+    sharedAssetPaths: { css: string; prescript: string; postscript: string }
+  }) => Promise<T>,
 ): Promise<T> {
   return await withTempDir("quartz-fixture-", async (dir) => {
     const contentDir = path.join(dir, "content")
     const outputDir = path.join(dir, "public")
     await mkdir(contentDir, { recursive: true })
-    await writeFile(path.join(contentDir, "index.md"), markdown, { encoding: "utf8", flag: "wx" })
+    for (const [relativePath, content] of Object.entries(normalizeFixtureFiles(files))) {
+      const filePath = path.join(contentDir, relativePath)
+      await mkdir(path.dirname(filePath), { recursive: true })
+      await writeFile(filePath, content, { encoding: "utf8", flag: "wx" })
+    }
     await execFileAsync(
       nodePath,
       ["quartz/bootstrap-cli.mjs", "build", "-d", contentDir, "-o", outputDir, "--concurrency", "1"],
@@ -39,8 +60,21 @@ export async function withBuiltFixtureSite<T>(
     )
 
     const indexHtml = await readUtf8(path.join(outputDir, "index.html"))
-    const indexCss = await readUtf8(path.join(outputDir, "index.css"))
-    return await fn({ outputDir, indexHtml, indexCss })
+    const sharedAssetPaths = {
+      css: extractAssetPath(indexHtml, /href="([^"]*index\.[a-f0-9]{12}\.css)"/, "hashed CSS"),
+      prescript: extractAssetPath(
+        indexHtml,
+        /src="([^"]*prescript\.[a-f0-9]{12}\.js)"/,
+        "hashed prescript",
+      ),
+      postscript: extractAssetPath(
+        indexHtml,
+        /src="([^"]*postscript\.[a-f0-9]{12}\.js)"/,
+        "hashed postscript",
+      ),
+    }
+    const indexCss = await readUtf8(path.join(outputDir, sharedAssetPaths.css))
+    return await fn({ outputDir, indexHtml, indexCss, sharedAssetPaths })
   })
 }
 

@@ -33,6 +33,23 @@ async function main() {
   await assertExists(path.join("referee-tools", "index.html"))
   await assertExists(path.join("referee-tools", "party-generator", "index.html"))
 
+  const rootEntries = await fs.readdir(publicDir)
+  const hashedCss = rootEntries.filter((entry) => /^index\.[a-f0-9]{12}\.css$/.test(entry))
+  const hashedPrescript = rootEntries.filter((entry) => /^prescript\.[a-f0-9]{12}\.js$/.test(entry))
+  const hashedPostscript = rootEntries.filter((entry) => /^postscript\.[a-f0-9]{12}\.js$/.test(entry))
+
+  if (hashedCss.length !== 1 || hashedPrescript.length !== 1 || hashedPostscript.length !== 1) {
+    throw new Error(
+      `Expected exactly one hashed shared asset bundle, found css=${hashedCss.length}, prescript=${hashedPrescript.length}, postscript=${hashedPostscript.length}`,
+    )
+  }
+
+  for (const legacyAsset of ["index.css", "prescript.js", "postscript.js"]) {
+    if (rootEntries.includes(legacyAsset)) {
+      throw new Error(`Legacy non-hashed asset still present in output: ${legacyAsset}`)
+    }
+  }
+
   const outputPaths = await collectPaths(publicDir)
   const leakedRefereePath = outputPaths.find((entry) => /zreferee/i.test(entry))
 

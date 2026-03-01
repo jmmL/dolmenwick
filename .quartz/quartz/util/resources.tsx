@@ -65,6 +65,21 @@ export interface StaticResources {
   css: CSSResource[]
   js: JSResource[]
   additionalHead: (JSX.Element | ((pageData: QuartzPluginData) => JSX.Element))[]
+  sharedPageAssets: SharedPageAssets
+}
+
+export interface SharedPageAssets {
+  cssFile: string
+  cssContent: string
+  prescriptFile: string
+  prescriptContent: string
+  postscriptFile: string
+  postscriptContent: string
+  fontFiles: {
+    slug: string
+    ext: `.${string}`
+    content: Buffer
+  }[]
 }
 
 export type StringResource = string | string[] | undefined

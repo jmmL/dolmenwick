@@ -200,7 +200,7 @@ async function rebuild(changes: ChangeEvent[], clientRefresh: () => void, buildD
     changesSinceLastBuild[change.path] = change.type
   }
 
-  const staticResources = getStaticResourcesFromPlugins(ctx)
+  const staticResources = await getStaticResourcesFromPlugins(ctx)
   const pathsToParse: FilePath[] = []
   for (const [fp, type] of Object.entries(changesSinceLastBuild)) {
     if (type === "delete" || path.extname(fp) !== ".md") continue

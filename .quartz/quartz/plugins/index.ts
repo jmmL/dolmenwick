@@ -1,12 +1,14 @@
 import { StaticResources } from "../util/resources"
 import { FilePath, FullSlug } from "../util/path"
 import { BuildCtx } from "../util/ctx"
+import { buildSharedPageAssets } from "./emitters/componentResources"
 
-export function getStaticResourcesFromPlugins(ctx: BuildCtx) {
+export async function getStaticResourcesFromPlugins(ctx: BuildCtx) {
   const staticResources: StaticResources = {
     css: [],
     js: [],
     additionalHead: [],
+    sharedPageAssets: await buildSharedPageAssets(ctx),
   }
 
   for (const transformer of [...ctx.cfg.plugins.transformers, ...ctx.cfg.plugins.emitters]) {
