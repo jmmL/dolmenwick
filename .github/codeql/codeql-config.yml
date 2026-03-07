@@ -1,0 +1,11 @@
+name: Dolmenwick CodeQL
+
+paths:
+  - .github
+  - .quartz
+  - .referee-tools
+
+paths-ignore:
+  - .quartz/node_modules
+  - .quartz/public
+  - .referee-tools/**/node_modules
