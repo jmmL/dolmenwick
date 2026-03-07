@@ -111,14 +111,19 @@ Feats of Exploration:
 - Shub's Nanna unwanted children rumour - 500xp
 - Monster lore - Shub's Nanna's sled - 500xp
 
-Total: 3472xp per character
+Total: **3472xp per character**
 
 Plus an extra 500xp each for the chronicler, treasurer, and cartographer
 
 # The current map
 Cartographer: Hollowgowl
 
-- 
+*NB the referee forgot to bring the map...*
+
+- Hex 1110 - Started in Dreg, and visited the Berkmaster's mansion
+- Hex 1010 - Headed west along the Ditchway, then south along Harrid's Path
+- Hex ???? - Lost, Shub's Nanna's cottage, Shrine of St Thorm
+- Hex 1010 - Shrine of St Ponch, House of the Harridwn
 
 # Next session
 2026-03-21
