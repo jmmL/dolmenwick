@@ -42,6 +42,41 @@ function resolveContentPath(contentPath) {
   return path.join(cwd, contentPath)
 }
 
+export function resolveServeFilePath(outputDir, requestPath) {
+  let decodedPath
+  try {
+    decodedPath = decodeURIComponent(requestPath)
+  } catch {
+    return null
+  }
+
+  if (!decodedPath.startsWith("/")) {
+    decodedPath = `/${decodedPath}`
+  }
+
+  if (decodedPath.includes("\0") || decodedPath.includes("\\")) {
+    return null
+  }
+
+  const rawSegments = decodedPath.split("/")
+  if (rawSegments.some((segment) => segment === "..")) {
+    return null
+  }
+
+  const normalizedPath = path.posix.normalize(decodedPath)
+  const rootDir = path.resolve(outputDir)
+  const absolutePath = path.resolve(rootDir, `.${normalizedPath}`)
+  const relativePath = path.relative(rootDir, absolutePath)
+  if (relativePath.startsWith("..") || path.isAbsolute(relativePath)) {
+    return null
+  }
+
+  return {
+    absolutePath,
+    normalizedPath,
+  }
+}
+
 /**
  * Handles `npx quartz create`
  * @param {*} argv arguments for `create`
@@ -367,7 +402,18 @@ export async function handleBuild(argv) {
       }
 
       // strip baseDir prefix
-      req.url = req.url?.slice(argv.baseDir.length)
+      const strippedUrl = req.url?.slice(argv.baseDir.length) ?? "/"
+      const [rawPath, rawQuery] = strippedUrl.split("?", 2)
+      const resolvedRequestPath = resolveServeFilePath(argv.output, rawPath || "/")
+      if (!resolvedRequestPath) {
+        console.log(styleText("red", `[404] ${req.url} (warning: invalid preview path)`))
+        res.writeHead(404)
+        res.end()
+        return
+      }
+
+      let fp = resolvedRequestPath.normalizedPath
+      req.url = rawQuery ? `${fp}?${rawQuery}` : fp
 
       const serve = async () => {
         const release = await buildMutex.acquire()
@@ -411,14 +457,13 @@ export async function handleBuild(argv) {
         res.end()
       }
 
-      let fp = req.url?.split("?")[0] ?? "/"
-
       // handle redirects
       if (fp.endsWith("/")) {
         // /trailing/
         // does /trailing/index.html exist? if so, serve it
         const indexFp = path.posix.join(fp, "index.html")
-        if (fs.existsSync(path.posix.join(argv.output, indexFp))) {
+        const resolvedIndexPath = resolveServeFilePath(argv.output, indexFp)
+        if (resolvedIndexPath && fs.existsSync(resolvedIndexPath.absolutePath)) {
           req.url = fp
           return serve()
         }
@@ -428,7 +473,8 @@ export async function handleBuild(argv) {
         if (path.extname(base) === "") {
           base += ".html"
         }
-        if (fs.existsSync(path.posix.join(argv.output, base))) {
+        const resolvedBasePath = resolveServeFilePath(argv.output, base)
+        if (resolvedBasePath && fs.existsSync(resolvedBasePath.absolutePath)) {
           return redirect(fp.slice(0, -1))
         }
       } else {
@@ -438,14 +484,16 @@ export async function handleBuild(argv) {
         if (path.extname(base) === "") {
           base += ".html"
         }
-        if (fs.existsSync(path.posix.join(argv.output, base))) {
+        const resolvedBasePath = resolveServeFilePath(argv.output, base)
+        if (resolvedBasePath && fs.existsSync(resolvedBasePath.absolutePath)) {
           req.url = fp
           return serve()
         }
 
         // does /regular/index.html exist? if so, redirect to /regular/
         let indexFp = path.posix.join(fp, "index.html")
-        if (fs.existsSync(path.posix.join(argv.output, indexFp))) {
+        const resolvedIndexPath = resolveServeFilePath(argv.output, indexFp)
+        if (resolvedIndexPath && fs.existsSync(resolvedIndexPath.absolutePath)) {
           return redirect(fp + "/")
         }
       }
