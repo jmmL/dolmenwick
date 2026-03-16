@@ -129,4 +129,8 @@ Cartographer: Hollowgowl
 2026-03-21
 Starting date: 14th Chysting (early hours)
 Plan: 
-- Loot room with spectre?
+- Looting and nosing around the House of the Harridwn
+- Potentially taking on the atacorn
+- Seeking a cure for Ilick and Hilda, the berkmaster's wife (you're aware of Cure Affliction in St Pastery's in Lankshorn, if you have a holy caster with you). There would probably also be herbs or salves, but I don't think you've had cause to make enquiries yet
+- Seeing what Brother Hogsbeard gets up to in the woods
+- Going up river with Gwendolyne in tow (to the Woodcutter's Encampment and onwards to Prigwort)
