@@ -23,6 +23,7 @@ A collection of player resources for a Dolmenwood campaign that started in late 
 4. [[Dolmenwood/Chronicles/Session 4|Session 4]] - Wombling Free
 5. [[Dolmenwood/Chronicles/Session 5|Session 5]] - Shantywood & the Smokehouse
 6. [[Dolmenwood/Chronicles/Session 6|Session 6]] - Leeleegablea
+7. [[Dolmenwood/Chronicles/Session 7|Session 7]] - Fortuitous Finds
 # Characters
 1. [[Bogfrink, Woodgrue Magician]]
 2. [[Drunker, Woodgrue Hunter]]
@@ -39,6 +40,7 @@ A collection of player resources for a Dolmenwood campaign that started in late 
 13. [[Samwise, Human Cleric]]
 14. [[Hollowgowl, Mossling Fighter]]
 15. [[Shade-of-Winter's-Betrayal, Elf Enchanter]]
+16. [[Dapple-of-Moon-on-Water, Elf Fighter]]
 ## The fallen
 1. [[Bredhr, Breggle Friar]] - inhaled poison but then burned to death
 2. [[Joremy, Human Fighter]] - bitten by a singing spider; went down dancing
