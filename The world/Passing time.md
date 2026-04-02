@@ -11,7 +11,7 @@ If there’s something you’d like to do that isn’t on this list - ask me!
 3. **Study** - transcribe from scrolls or spellbooks (magicians, per [[House and optional rules#Magical research (DPB 78 alterations)|Magical research]]), gather local monster lore from guides or animal handlers (Bards or Hunters), smoke some pipeleaf to think through a knotty problem
 4. **Gossip** - pick up on rumours, spread some of your own, or try to make thematic connections (e.g., with a local group of thieves) - *not available in Lankshorn as the party has plenty to go on*
 5. **Hire** - find and hire a sage, guide, herbalist, pack handler, or even a retainer (an adventurer-in-waiting who is paid a fixed fee and typically receives a half-share of the loot)
-6. **Hustle** - earn 3d6 silver pieces using your class or kindred talents (eg picking pockets, signing in taverns)
+6. **Hustle** - earn 3d6 silver pieces using your class or kindred talents (eg picking pockets, singing in taverns)
 
 Free action: **Rest**
 - Per the resting rules (1HP for overnight or 1d3 HP for a full day)
