@@ -24,6 +24,7 @@ A collection of player resources for a Dolmenwood campaign that started in late 
 5. [[Dolmenwood/Chronicles/Session 5|Session 5]] - Shantywood & the Smokehouse
 6. [[Dolmenwood/Chronicles/Session 6|Session 6]] - Leeleegablea
 7. [[Dolmenwood/Chronicles/Session 7|Session 7]] - Fortuitous Finds
+8. [[Dolmenwood/Chronicles/Session 8|Session 8]] - Dinner and a Show
 # Characters
 1. [[Bogfrink, Woodgrue Magician]]
 2. [[Drunker, Woodgrue Hunter]]
