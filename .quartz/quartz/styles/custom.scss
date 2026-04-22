@@ -235,3 +235,83 @@ a.internal:hover {
     font-size: 2em;
   }
 }
+
+.rumours-page .rumours-map {
+  margin: 2rem 0 2.5rem;
+}
+
+.rumours-page .rumours-map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid color-mix(in srgb, var(--lightgray) 88%, transparent);
+  border-radius: 12px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--light) 92%, var(--highlight));
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
+}
+
+.rumours-page .rumours-map figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--gray);
+}
+
+.rumours-page .rumours-hotspot {
+  cursor: pointer;
+}
+
+.rumours-page .rumours-hotspot-hitbox {
+  fill: transparent;
+  stroke: transparent;
+}
+
+.rumours-page .rumours-hotspot-marker {
+  fill: color-mix(in srgb, var(--secondary) 72%, white);
+  stroke: var(--light);
+  stroke-width: 18px;
+  opacity: 0.92;
+  transition:
+    fill 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  transform-origin: center;
+}
+
+.rumours-page .rumours-hotspot:hover .rumours-hotspot-marker,
+.rumours-page .rumours-hotspot:focus .rumours-hotspot-marker,
+.rumours-page .rumours-hotspot:focus-visible .rumours-hotspot-marker {
+  fill: var(--tertiary);
+  opacity: 1;
+  transform: scale(1.14);
+}
+
+.rumours-page .rumours-hotspot:focus,
+.rumours-page .rumours-hotspot:focus-visible {
+  outline: none;
+}
+
+.rumours-page .rumour-anchor {
+  display: block;
+  height: 0;
+  scroll-margin-top: 6rem;
+}
+
+.rumours-page li:has(.rumour-anchor:target) {
+  margin-left: -0.6rem;
+  padding: 0.45rem 0.6rem;
+  border-left: 3px solid var(--secondary);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--highlight) 92%, var(--light));
+}
+
+@media all and (max-width: 800px) {
+  .rumours-page .rumours-map {
+    margin: 1.5rem 0 2rem;
+  }
+
+  .rumours-page li:has(.rumour-anchor:target) {
+    margin-left: -0.35rem;
+    padding: 0.35rem 0.4rem;
+  }
+}
