@@ -136,6 +136,8 @@ cssclasses:
 ## Dreg
 - <span id="rumour-dreg-hogbeard" class="rumour-anchor"></span>**3. Hogbeard’s zealots:** Brother Hogbeard and his yellow-frocked zealots are abducting sinners for night-time "exorcisms" in the woods, in order to cleanse Dreg of its sin.
 - <span id="rumour-dreg-frog-island" class="rumour-anchor"></span>**5. Island of the frogs:** A mysterious, fog-shrouded island drifts in the swamp to the north of Dreg. It is home to a frog-headed sorceress whose hypnotic gaze can cure magical afflictions.
+## The Woodcutter's Encampment
+- **5. The Hag’s lover:** The local Vicar, Father Jymes Horsely, spends his days and nights wandering Hag’s Addle. The reason is that he’s the Hag’s secret lover and servant. His dog Clewyd is a monstrosity in disguise, a gift from the Hag
 ## Prigwort
 - <span id="rumour-prigwort-wyrm" class="rumour-anchor"></span>**9. Lost wyrm’s hoard:** The wyrm Chasobrithe laired in the woods to the south, until it was slain by the noble Sir Windlass (“the laughing knight”). The body of the monster was never found; its bones may lay in some forgotten grove, to this day.
 # Castle Brackenwold
