@@ -77,7 +77,7 @@ test("hearth routes resolve without the Quartz 404 shell", async ({ page }) => {
 
 test("session notes preserve hard line breaks and breadcrumbs", async ({ page }, testInfo) => {
   await page.goto("/")
-  await page.getByRole("link", { name: "Session 1" }).click()
+  await page.getByRole("link", { name: "Session 1", exact: true }).click()
 
   await expect(page).toHaveURL(/\/Chronicles\/Session-1$/)
   await expect(page.locator(".breadcrumb-container")).toBeVisible()
