@@ -46,6 +46,7 @@ A collection of player resources for a Dolmenwood campaign that started in late 
 14. [[Shade-of-Winter's-Betrayal, Elf Enchanter]]
 15. [[Dapple-of-Moon-on-Water, Elf Fighter]]
 16. Mogget, Grimalkin Fighter
+17. Odell, Breggle Knight
 ## The fallen
 1. [[Bredhr, Breggle Friar]] - inhaled poison but then burned to death
 2. [[Joremy, Human Fighter]] - bitten by a singing spider; went down dancing

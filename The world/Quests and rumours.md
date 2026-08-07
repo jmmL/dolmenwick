@@ -103,6 +103,7 @@ cssclasses:
 - <span id="rumour-lake-longmere-magic" class="rumour-anchor"></span>**1. Ancient magic of Lake Longmere:** Known colloquially as “the Heart of the Wood,” the great lake Longmere is said to be the seat of an ancient magic in Dolmenwood, guarded by the witches. On moonlit nights, witches fly over the lake and commune with water spirits, who whisper secrets that others wish to hide. 
 - **3. Dewidort of Smerne:** The phantom of this notorious highwayman has haunted the roads of the Wood since the village of his origin—situated in the wild moors north of Dolmenwood—was submerged in the black ooze of the ever-expanding bog. The secret location of his treasure hoard is a topic of great interest to adventurers, rogues, and the law alike.
 - <span id="rumour-prigwort-fairies" class="rumour-anchor"></span>**4. Fairies in Prigwort:** The jaded entourage of the evil fairy Prince Mallowheart is said to visit the town of Prigwort at night for secret congress with its council, the Brewmasters. What dealings they have with the fairy Prince is unknown.
+	- Seems to be partially true per [[Dolmenwood/Chronicles/Session 11|Session 11]]
 - <span id="rumour-lankshorn-rivalries" class="rumour-anchor"></span>**5. Longhorn rivalries:** The half-brother longhorns Ramius and Malbleat are bitter rivals, scheming to undermine each other’s reputation and influence. Word in Lankshorn is that both lords are amassing troops in secret and that their animosity will soon erupt into open war. The Lankshorners fear that their town may be the stage upon which the two armies clash.
 - <span id="rumour-lankshorn-bladesmith" class="rumour-anchor"></span>~~**6. Master bladesmith in Lankshorn:** The finest bladesmith in Dolmenwood makes his home in Lankshorn. In addition to normal swords of exquisite make, he sells weapons of cold iron, which is harmful to fairies~~
 	- Confirmed **true** in [[Dolmenwood/Chronicles/Session 4|Session 4]]
@@ -131,7 +132,8 @@ cssclasses:
 - There are strange owls in the woods to the north of Lankshorn
 - There are corpses in the bogs of a ruined town to the east of Lankshorn
 ## Orbswallow (in the Mulchgrove)
-- **11. Bloody tentacles:** Bloody piles of writhing tentacles in the shapes of animals and people have been found in the glades to the north of Orbswallow
+- ~~**11. Bloody tentacles:** Bloody piles of writhing tentacles in the shapes of animals and people have been found in the glades to the north of Orbswallow~~
+	- True, per [[Dolmenwood/Chronicles/Session 12|Session 12]]
 - **18. Mission to the moon:** The great mossling adventurer Blumber now lives several days travel to the north-east of Orbswallow in a manor made entirely of cheese. She is conspiring with a group of rat folk to return them to the moon.
 ## Dreg
 - <span id="rumour-dreg-hogbeard" class="rumour-anchor"></span>**3. Hogbeard’s zealots:** Brother Hogbeard and his yellow-frocked zealots are abducting sinners for night-time "exorcisms" in the woods, in order to cleanse Dreg of its sin.
@@ -142,3 +144,6 @@ cssclasses:
 - <span id="rumour-prigwort-wyrm" class="rumour-anchor"></span>**9. Lost wyrm’s hoard:** The wyrm Chasobrithe laired in the woods to the south, until it was slain by the noble Sir Windlass (“the laughing knight”). The body of the monster was never found; its bones may lay in some forgotten grove, to this day.
 # Castle Brackenwold
 - <span id="rumour-brackenwold-excavations" class="rumour-anchor"></span>**20. Excavations:** Two archaeological expeditions have left Castle Brackenwold recently. Sage Archibald Helmwhit’s went north to the Table Downs to unearth ancient civilisations, while magician Peligrue the Perspicuous’ went east to unearth a giant skeleton.
+# Meagre's Reach
+- **3. Redhearth’s rebels:** Benedict Redhearth is stirring a rebellion against Ygraine, with his recruits gathering at a war camp to the west of the village. 
+- **7. Dream boats:** At night, swan-like ships can be seen crossing the Dark Mirror. Boarding one of these ships takes you to the land of dreams.
