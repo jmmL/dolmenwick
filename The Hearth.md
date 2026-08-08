@@ -28,7 +28,9 @@ A collection of player resources for a Dolmenwood campaign that started in late 
 9. [[Dolmenwood/Chronicles/Session 9|Session 9]] - Candlestone Fortress
 10. [[Dolmenwood/Chronicles/Session 10|Session 10]] - Along the White Way
 11. [[Dolmenwood/Chronicles/Session 11|Session 11]] - Into the Mulchgrove
-12. [[Dolmenwood/Chronicles/Session 12|Session 12]] - *TBD*
+12. [[Dolmenwood/Chronicles/Session 12|Session 12]] - Close Encounters
+13. [[Dolmenwood/Chronicles/Session 13|Session 13]] - The Ruckus at the Dell
+14. [[Dolmenwood/Chronicles/Session 14|Session 14]] - Snails and Sorcery
 # Player characters
 1. [[Bogfrink, Woodgrue Magician]]
 2. [[Drunker, Woodgrue Hunter]]
@@ -45,8 +47,9 @@ A collection of player resources for a Dolmenwood campaign that started in late 
 13. [[Samwise, Human Cleric]]
 14. [[Shade-of-Winter's-Betrayal, Elf Enchanter]]
 15. [[Dapple-of-Moon-on-Water, Elf Fighter]]
-16. Mogget, Grimalkin Fighter
-17. Odell, Breggle Knight
+16. [[Mogget, Grimalkin Enchanter]]
+17. [[Odell, Breggle Knight]]
+18. [[Hollb, Mossling Magician]]
 ## The fallen
 1. [[Bredhr, Breggle Friar]] - inhaled poison but then burned to death
 2. [[Joremy, Human Fighter]] - bitten by a singing spider; went down dancing

@@ -9,7 +9,7 @@ Session plan:
 # Characters
 1.  [[Ilick, Mossling Magician]]
 2. [[Nannigrew, Breggle Friar]]
-3. Mogget
+3. [[Mogget, Grimalkin Enchanter]]
 4. Odell
 
 # Chronicler’s notes

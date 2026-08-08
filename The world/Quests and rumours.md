@@ -113,7 +113,8 @@ cssclasses:
 - **16. The Nag-Lord moves south:** Crookhorns have been sighted in the vicinity of the ruined abbey of St Clewyd of late, far to the south of their master’s dominion. The folk of Prigwort mutter fearfully of war. Word has it that the Duke’s forces are massing in the town in anticipation of an attack.
 - <span id="rumour-prigwort-droobe" class="rumour-anchor"></span>**17. The wizard of Prigwort:** A magician by the name of Droobe makes his home within the town of Prigwort. It is said that he is amenable to visitors seeking his arcane knowledge and is willing to place or lift curses for a fee. It is believed that his magic is responsible for the otherworldly quality of the spirits brewed in Prigwort.
 - <span id="rumour-big-chook" class="rumour-anchor"></span>**19. Treasures of the Big Chook:** Fishers’ tales abound with accounts of the lake monster Big Chook which haunts the waters of Lake Longmere and metes out horrific death to all who encounter it. The beast is said to slumber in a crystal cavern deep in the lake, where it guards a hoard of fabulous treasures, including the long lost mirror of the Queen of the Witches—a magical doorway to the realm of the witches’ dark gods.
-- <span id="rumour-mulchgrove-fungi" class="rumour-anchor"></span>**20. Weird fungi in Mulchgrove:** A profusion of valuable fungi, some of which are magical, can be found in Mulchgrove. Witches and herbalists will pay good money for rare specimens.
+- ~~<span id="rumour-mulchgrove-fungi" class="rumour-anchor"></span>**20. Weird fungi in Mulchgrove:** A profusion of valuable fungi, some of which are magical, can be found in Mulchgrove. Witches and herbalists will pay good money for rare specimens~~.
+	- True, per [[Dolmenwood/Chronicles/Session 14|Session 14]]
 # Local
 ## Lankshorn
 - ~~**1. Berkmaster’s mistress:** The Berkmaster secretly sends provisions to his mistress and second family, hidden in a woodland hut to the north-east~~
@@ -146,4 +147,7 @@ cssclasses:
 - <span id="rumour-brackenwold-excavations" class="rumour-anchor"></span>**20. Excavations:** Two archaeological expeditions have left Castle Brackenwold recently. Sage Archibald Helmwhit’s went north to the Table Downs to unearth ancient civilisations, while magician Peligrue the Perspicuous’ went east to unearth a giant skeleton.
 # Meagre's Reach
 - **3. Redhearth’s rebels:** Benedict Redhearth is stirring a rebellion against Ygraine, with his recruits gathering at a war camp to the west of the village. 
+- ~~4. Heaven’s light: Sister Nancy Delora insists that the village’s vicar, Hallyman, is “away on pilgrimage.” In fact, this is a cover for the fact she murdered him for speaking out against Ygraine.~~
+	- Confirmed false per conversation with Ygraine in [[Dolmenwood/Chronicles/Session 14|Session 14]]
 - **7. Dream boats:** At night, swan-like ships can be seen crossing the Dark Mirror. Boarding one of these ships takes you to the land of dreams.
+- 13. Merry lodgings: Labourers who have got lost heading east to the Dark Mirror report stumbling across a quaint cottage in a valley of foxgloves. The house’s furnishings came alive when the lost souls entered, commanded by the witch inhabitant to expel intruders.

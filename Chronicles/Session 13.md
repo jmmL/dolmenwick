@@ -9,12 +9,12 @@ Session plan:
 # Characters
 1.  [[Ilick, Mossling Magician]]
 2. [[Nannigrew, Breggle Friar]]
-3. Mogget
-4. Smodri
-5. Tip
-6. Shade
-7. Dapple
-8. Hollb
+3. [[Mogget, Grimalkin Enchanter]]
+4. [[Smodri, Mossling Bard]]
+5. [[Tip, Grimalkin Thief]]
+6. [[Shade-of-Winter's-Betrayal, Elf Enchanter]]
+7. [[Dapple-of-Moon-on-Water, Elf Fighter]]
+8. [[Hollb, Mossling Magician]]
 
 # Chronicler’s notes
 Chronicler: Ilick
