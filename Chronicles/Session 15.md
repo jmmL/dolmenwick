@@ -34,15 +34,15 @@ Apparently while we’d all been having this conversation, he had co-ordinated w
 
 Needless to say, Bumble was not happy with ‘Fairy Trickery’, helping out her workers and complaining about the company we were keeping. Nannigrew helped distract her ire by mentioning our other encounters with Fairy and Hollb seemed starstruck with Bumble in general. This left Smodri and ourselves on our own in the library, where he discovered a trapdoor that he sensed a room full of fermenting cheeses and iron chests behind and we discovered a book Nannigrew might be partial to in liturgic entitled “Diuretics of our Deity”. This transpired to be a book of recipes intent on cleaning the sin out of individuals, perhaps quite literally given the title, but Nannigrew did seem pleased to receive it.  
   
-_Vessel Moggét flees with our stolen Snail…encounters a bearded male Vessel…is accosted by thrown mandrakes…oh yes, it begins, it begins indeed…Vessel Moggét recovers a jar with summer scenes…opens it to create a beacon of sunny weather, pinpointing his location…  
+_Vessel Moggét flees with our stolen Snail…encounters a bearded male Vessel…is accosted by thrown mandrakes…oh yes, it begins, it begins indeed…Vessel Moggét recovers a jar with summer scenes…opens it to create a beacon of sunny weather, pinpointing his location…_  
   
-_We tracked down Moggét easily enough from the sunbeams pouring down on him, deciding to make camp in the woods after searching for anything else interesting, not wanting to disturb Bumble further. Smodri and ourselves came across a number of useful looking herbs and fungi, including some cream coloured floppy varietals, some black meddlers, and some ramble frond fern. Nannigrew cooked for us all, making sure to give Moggét and Conchwin a meal from the book to help cleanse their sin.
+_We tracked down Moggét easily enough from the sunbeams pouring down on him, deciding to make camp in the woods after searching for anything else interesting, not wanting to disturb Bumble further. Smodri and ourselves came across a number of useful looking herbs and fungi, including some cream coloured floppy varietals, some black meddlers, and some ramble frond fern. Nannigrew cooked for us all, making sure to give Moggét and Conchwin a meal from the book to help cleanse their sin._
 
 This may or may not have lead to them being somewhat distracted while taking their watch as we slept…  
   
-_Vessel Moggét touched by silken strands…Vessel Moggét wraps themselves up in webbing…Vessel Moggét refuses to call for help or wake anyone but Conchwin…creating illusions to try and escape…only rousing some other Vessels from struggle against the Giant Spiders…Vessel Nannigrew sets one on fire…Vessel Hollb gets wrapped…Vessel Moggét bitten, poisoned, deeply!  
-  
-_…We awoke to a scene of mild chaos, a trio of giant spiders having attacked the group. We swiftly put two of them asleep and unravelled the web threads from Hollb with our whistling as Smodri finished off the fleeing, flaming spider, but it seemed Moggét was very badly poisoned.  
+_Vessel Moggét touched by silken strands…Vessel Moggét wraps themselves up in webbing…Vessel Moggét refuses to call for help or wake anyone but Conchwin…creating illusions to try and escape…only rousing some other Vessels from struggle against the Giant Spiders…Vessel Nannigrew sets one on fire…Vessel Hollb gets wrapped…Vessel Moggét bitten, poisoned, deeply! _
+
+…We awoke to a scene of mild chaos, a trio of giant spiders having attacked the group. We swiftly put two of them asleep and unravelled the web threads from Hollb with our whistling as Smodri finished off the fleeing, flaming spider, but it seemed Moggét was very badly poisoned.  
   
 We went as quickly as we could back to Mumblebowl manor, Bumble not keen on helping Moggét, but begrudgingly giving him some of the Lichenyarg to delay the poison’s effect and telling us where to find an herb that might help: Wallowmoss.  
   
@@ -52,9 +52,9 @@ We then entered an area of rubbery black antler like fungi dripping orange sap l
 
 Carefully placing a bud in Moggét’s maw and helping him chew, it soon transpired that it didn’t appear to have any effect on his poisoning, and not even repeat doses appeared to help. So we slung him onto Conchwin and had the giant snail speed towards Blackswell, in the hopes the apothecary there would have the one other only known cure for poisoning in the woods.  
   
-_Vessel Moggét tries to reach settlement…encounters two bears…Sacrifice Conchwin uses psionic to distract and continue…little time left…arrive…no cure available…no hope…Vessel Moggét enters apothecary…applies flame…perishes. …as we promise…  
-  
-_We arrive at Blackswell to the smell and sight of smoke, and fear perhaps the worst has occurred…
+_Vessel Moggét tries to reach settlement…encounters two bears…Sacrifice Conchwin uses psionic to distract and continue…little time left…arrive…no cure available…no hope…Vessel Moggét enters apothecary…applies flame…perishes. …as we promise…_
+
+We arrive at Blackswell to the smell and sight of smoke, and fear perhaps the worst has occurred…
 # Treasurer’s haul
 Treasurer: Nannigrew
 ## Treasure
@@ -91,5 +91,5 @@ Cartographer: Smodri
 
 # Next session
 2026-09-20
-Starting date: xxth Reedwyrm
-Starting location: Blackeswell
+Starting date: early hours of 8th Reedwyrm
+Starting location: Just south of Blackeswell

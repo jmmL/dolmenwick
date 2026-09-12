@@ -31,7 +31,7 @@ A collection of player resources for a Dolmenwood campaign that started in late 
 12. [[Dolmenwood/Chronicles/Session 12|Session 12]] - Close Encounters
 13. [[Dolmenwood/Chronicles/Session 13|Session 13]] - The Ruckus at the Dell
 14. [[Dolmenwood/Chronicles/Session 14|Session 14]] - Snails and Sorcery
-15. [[Session 15]] - The Nine Lives of Mogget
+15. [[Session 15]] - The Nine Lives of Mogget Flippancy
 # Player characters
 1. [[Bogfrink, Woodgrue Magician]]
 2. [[Drunker, Woodgrue Hunter]]
