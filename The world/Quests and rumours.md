@@ -16,87 +16,8 @@ cssclasses:
 	- *Completed in [[Dolmenwood/Chronicles/Session 3|Session 3]]*
 4. Return Gwendolyne to Prigwort
 	- Reward: unknown
-5. Cure the Berkmaster's wife and slay the atacorn in the Smokehouse
+5. ~~Cure the Berkmaster's wife and slay the atacorn in the Smokehouse~~
 	- Reward: 1000g for one, 2000g for both
-
-<figure class="rumours-map">
-  <svg viewBox="0 0 4831 3426" role="img" aria-labelledby="rumours-map-title rumours-map-desc">
-    <title id="rumours-map-title">Dolmenwood rumours map</title>
-    <desc id="rumours-map-desc">A map of Dolmenwood with clickable hotspots linking to rumours that have a clear location on this page.</desc>
-    <image href="../Maps-and-images/Dolmenwood-artistic-map.png" width="4831" height="3426" />
-    <a href="#rumour-lake-longmere-magic" class="rumours-hotspot">
-      <title>Ancient magic of Lake Longmere</title>
-      <circle class="rumours-hotspot-hitbox" cx="1700" cy="1540" r="92" />
-      <circle class="rumours-hotspot-marker" cx="1700" cy="1540" r="42" />
-    </a>
-    <a href="#rumour-big-chook" class="rumours-hotspot">
-      <title>Treasures of the Big Chook</title>
-      <circle class="rumours-hotspot-hitbox" cx="1820" cy="1640" r="86" />
-      <circle class="rumours-hotspot-marker" cx="1820" cy="1640" r="36" />
-    </a>
-    <a href="#rumour-valley-wise-beasts" class="rumours-hotspot">
-      <title>Rise of the talking beasts</title>
-      <circle class="rumours-hotspot-hitbox" cx="2170" cy="1020" r="92" />
-      <circle class="rumours-hotspot-marker" cx="2170" cy="1020" r="42" />
-    </a>
-    <a href="#rumour-prigwort-fairies" class="rumours-hotspot">
-      <title>Fairies in Prigwort</title>
-      <circle class="rumours-hotspot-hitbox" cx="2515" cy="1240" r="92" />
-      <circle class="rumours-hotspot-marker" cx="2515" cy="1240" r="42" />
-    </a>
-    <a href="#rumour-prigwort-droobe" class="rumours-hotspot">
-      <title>The wizard of Prigwort</title>
-      <circle class="rumours-hotspot-hitbox" cx="2650" cy="1190" r="86" />
-      <circle class="rumours-hotspot-marker" cx="2650" cy="1190" r="36" />
-    </a>
-    <a href="#rumour-prigwort-wyrm" class="rumours-hotspot">
-      <title>Lost wyrm's hoard south of Prigwort</title>
-      <circle class="rumours-hotspot-hitbox" cx="2465" cy="1445" r="86" />
-      <circle class="rumours-hotspot-marker" cx="2465" cy="1445" r="36" />
-    </a>
-    <a href="#rumour-lankshorn-rivalries" class="rumours-hotspot">
-      <title>Longhorn rivalries threatening Lankshorn</title>
-      <circle class="rumours-hotspot-hitbox" cx="1655" cy="2580" r="92" />
-      <circle class="rumours-hotspot-marker" cx="1655" cy="2580" r="42" />
-    </a>
-    <a href="#rumour-lankshorn-bladesmith" class="rumours-hotspot">
-      <title>Master bladesmith in Lankshorn</title>
-      <circle class="rumours-hotspot-hitbox" cx="1775" cy="2640" r="86" />
-      <circle class="rumours-hotspot-marker" cx="1775" cy="2640" r="36" />
-    </a>
-    <a href="#rumour-high-hankle-king-pusskin" class="rumours-hotspot">
-      <title>Milk or mice for King Pusskin near High-Hankle</title>
-      <circle class="rumours-hotspot-hitbox" cx="1160" cy="3170" r="92" />
-      <circle class="rumours-hotspot-marker" cx="1160" cy="3170" r="42" />
-    </a>
-    <a href="#rumour-dreg-hogbeard" class="rumours-hotspot">
-      <title>Hogbeard's zealots in Dreg</title>
-      <circle class="rumours-hotspot-hitbox" cx="2520" cy="2555" r="92" />
-      <circle class="rumours-hotspot-marker" cx="2520" cy="2555" r="42" />
-    </a>
-    <a href="#rumour-dreg-frog-island" class="rumours-hotspot">
-      <title>Island of the frogs north of Dreg</title>
-      <circle class="rumours-hotspot-hitbox" cx="2480" cy="2330" r="86" />
-      <circle class="rumours-hotspot-marker" cx="2480" cy="2330" r="36" />
-    </a>
-    <a href="#rumour-mulchgrove-fungi" class="rumours-hotspot">
-      <title>Weird fungi in Mulchgrove</title>
-      <circle class="rumours-hotspot-hitbox" cx="3785" cy="1655" r="92" />
-      <circle class="rumours-hotspot-marker" cx="3785" cy="1655" r="42" />
-    </a>
-    <a href="#rumour-brackenwold-dreams" class="rumours-hotspot">
-      <title>The dream thief troubling Castle Brackenwold</title>
-      <circle class="rumours-hotspot-hitbox" cx="3590" cy="1830" r="92" />
-      <circle class="rumours-hotspot-marker" cx="3590" cy="1830" r="42" />
-    </a>
-    <a href="#rumour-brackenwold-excavations" class="rumours-hotspot">
-      <title>Excavations leaving Castle Brackenwold</title>
-      <circle class="rumours-hotspot-hitbox" cx="3450" cy="1775" r="86" />
-      <circle class="rumours-hotspot-marker" cx="3450" cy="1775" r="36" />
-    </a>
-  </svg>
-  <figcaption>Dolmenwood as known by those who dwell there. Hotspots mark rumours with a clear location on the page below.</figcaption>
-</figure>
 
 # Rumours
 ## Dolmenwood-wide
@@ -135,7 +56,8 @@ cssclasses:
 ## Orbswallow (in the Mulchgrove)
 - ~~**11. Bloody tentacles:** Bloody piles of writhing tentacles in the shapes of animals and people have been found in the glades to the north of Orbswallow~~
 	- True, per [[Dolmenwood/Chronicles/Session 12|Session 12]]
-- **18. Mission to the moon:** The great mossling adventurer Blumber now lives several days travel to the north-east of Orbswallow in a manor made entirely of cheese. She is conspiring with a group of rat folk to return them to the moon.
+- ~~**18. Mission to the moon:** The great mossling adventurer Blumber now lives several days travel to the north-east of Orbswallow in a manor made entirely of cheese. She is conspiring with a group of rat folk to return them to the moon.~~
+	- Partly true, per [[Dolmenwood/Chronicles/Session 15|Session 15]]. She wishes to venture to the moon, but only possess the diary of some rat folk, and has had no direct contact.
 ## Dreg
 - <span id="rumour-dreg-hogbeard" class="rumour-anchor"></span>**3. Hogbeard’s zealots:** Brother Hogbeard and his yellow-frocked zealots are abducting sinners for night-time "exorcisms" in the woods, in order to cleanse Dreg of its sin.
 - <span id="rumour-dreg-frog-island" class="rumour-anchor"></span>**5. Island of the frogs:** A mysterious, fog-shrouded island drifts in the swamp to the north of Dreg. It is home to a frog-headed sorceress whose hypnotic gaze can cure magical afflictions.
